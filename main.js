@@ -1,9 +1,8 @@
 
-
+  
+  
 //// Code for heatmap implementation
 function startMap() {
-    
-   // Need to add data from DB in the future, for now temp data is gotten from dummydata_10000.js
 
   // The type of map being used in Leaflet
   var baseLayer = L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw', {
@@ -14,6 +13,7 @@ function startMap() {
       id: 'mapbox.streets'
   });
 
+  // Heatmap configuration
   var hmConfig = {
     "radius": 0.0005,         // Small to scale down to street sized points
     "maxOpacity": .8,         // Sets max opacity of points
@@ -26,9 +26,15 @@ function startMap() {
   var heatmapLayer = new HeatmapOverlay(hmConfig);
   var map = new L.Map('balMap', {
     center: new L.LatLng(39.290203, -76.612816),
-    zoom: 12,
+    zoom: 11,
     layers: [baseLayer, heatmapLayer]
   });
 
+  // Restrict map to Baltimore
+  map.setMaxBounds(map.getBounds());
+  
+  // Need to add data from DB in the future, for now temp data is gotten from dummydata_10000.js
   heatmapLayer.setData(testData);
 }
+
+	
