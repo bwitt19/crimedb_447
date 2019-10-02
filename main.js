@@ -1,14 +1,9 @@
 
+
 //// Code for heatmap implementation
 function startMap() {
-  // Temporary test data
-  var testData = {
-      max: 100,
-      data: [ {lat: 39.290293, lng:-76.612816, count: 3},
-              {lat: 39.290493, lng:-76.612816, count: 3},
-              {lat: 39.290693, lng:-76.612816, count: 5},
-              {lat: 39.290693, lng:-76.612816, count: 50},]
-  };
+    
+   // Need to add data from DB in the future, for now temp data is gotten from dummydata_10000.js
 
   // The type of map being used in Leaflet
   var baseLayer = L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw', {
