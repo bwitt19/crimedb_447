@@ -15,113 +15,76 @@
   <script src="https://www.patrick-wied.at/static/heatmapjs/assets/js/heatmap.min.js"></script>
 </head>
 
-<body>
+<body onload="startMap()">
 
-<header>
-<!-- Top navigation bar -->
-<nav class="navbar navbar-expand-md navbar-dark bg-dark">
-  <a class="navbar-brand" href="#">Crime Visualizer - Baltimore</a>
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-  </button>
-  <div class="collapse navbar-collapse" id="navbarCollapse">
-    <ul class="navbar-nav mr-auto">
-      <li class="nav-item active">
-        <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="#">Filters</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Profile</a>
-      </li>
-    </ul>
-    <form class="form-inline mt-2 mt-md-0">
-      <button class="btn btn-outline-success my-2 my-sm-0">Sign up</button>
-      <button class="btn btn-outline-success my-2 my-sm-0">Login</button>
-    </form>
-  </div>
-</nav>
-</header>
-
-<main role="main">
-
-<div class="jumbotron">
-  <h1>Crime Tracker [Baltimore]</h1>
-  <p>(alpha release)<br></p>
-  <p>
-    Default map shows crime data and activity in Baltimore City.<br>
-    Data shown on the map can be filtered to view different statistics in particular.<br>
-    Login or create an account to save created filters.
-</div>
-
-<div class="container">
-  <div class="row">
-    <div class="col-md-4">
-      <h2>Filters</h2>
-      <ul>
-        <li>Option 1</li>
-        <li>Option 2</li>
-        <li>Option 3</li>
-        <ul>
-          <li>Option 3a</li>
-          <li>Option 3b</li>
-        </ul>
-        <li>Option 4</li>
-        <li>These will be checkboxes</li>
-        <li>In the future</li>
+  <header>
+  <!-- Top navigation bar -->
+  <nav class="navbar navbar-expand-md navbar-dark bg-dark">
+    <a class="navbar-brand" href="#">Crime Visualizer - Baltimore</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarCollapse">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item active">
+          <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Filters</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Profile</a>
+        </li>
       </ul>
-      <p><a class="btn btn-secondary" href="#" role="button">Apply Filters »</a></p>
+      <form class="form-inline mt-2 mt-md-0">
+        <button class="btn btn-outline-success my-2 my-sm-0">Sign up</button>
+        <button class="btn btn-outline-success my-2 my-sm-0">Login</button>
+      </form>
+    </div>
+  </nav>
+  </header>
+
+  <main role="main">
+
+    <div class="jumbotron">
+      <h1>Crime Tracker [Baltimore]</h1>
+      <p>(alpha release)<br></p>
+      <p>
+        Default map shows crime data and activity in Baltimore City.<br>
+        Data shown on the map can be filtered to view different statistics in particular.<br>
+        Login or create an account to save created filters.
     </div>
 
-    <div class="container col-md-8" id="balMap" style="height: 600px;">
-      <!-- JS for Baltimore heatmap -->
-      <!-- style="width: 900px; height: 600px;" -->
-      <script>
-          var testData = {
-              max: 100,
-              data: [ {lat: 39.290293, lng:-76.612816, count: 3},
-                      {lat: 39.290493, lng:-76.612816, count: 3},
-                      {lat: 39.290693, lng:-76.612816, count: 5},
-                      {lat: 39.290693, lng:-76.612816, count: 50},]
-          };
+    <div class="container">
+      <div class="row">
+        <div class="col-md-4">
+          <h2>Filters</h2>
+          <ul>
+            <li>Option 1</li>
+            <li>Option 2</li>
+            <li>Option 3</li>
+            <ul>
+              <li>Option 3a</li>
+              <li>Option 3b</li>
+            </ul>
+            <li>Option 4</li>
+            <li>These will be checkboxes</li>
+            <li>In the future</li>
+          </ul>
+          <p><a class="btn btn-secondary" href="#" role="button">Apply Filters »</a></p>
+        </div>
 
-          // The type of map being used in Leaflet
-          var baseLayer = L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw', {
-              minZoom: 11,
-              attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, ' +
-                          '<a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, ' +
-                          'Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
-              id: 'mapbox.streets'
-          });
-
-          var hmConfig = {
-            "radius": 0.0005,         // Small to scale down to street sized points
-            "maxOpacity": .8,         // Sets max opacity of points
-            "scaleRadius": true,      // Scales the radius of the point based on map zoom
-            "useLocalExtrema": true,  // Uses data maximum within current map viewpoint for colorationof points
-          };
-
-          // Config the map
-          var heatmapLayer = new HeatmapOverlay(hmConfig);
-          var map = new L.Map('balMap', {
-            center: new L.LatLng(39.290203, -76.612816),
-            zoom: 12,
-            layers: [baseLayer, heatmapLayer]
-          });
-
-          heatmapLayer.setData(testData);
-      </script>
+        <div class="container col-md-8" id="balMap" style="height: 600px;" />
+      </div>
     </div>
-  </div>
-</div>
-</main>
+  </main>
 
-<footer class="container">
-  <hr>
-  <p>This is totally an alpha release. Team 5, CMSC 447 Fall 2019. Hi Chase.</p>
-</footer>
+  <footer class="container">
+    <hr>
+    <p>This is totally an alpha release. Team 5, CMSC 447 Fall 2019. Hi Chase.</p>
+  </footer>
 
+  <script src="main.js"></script>
 </body>
 
 </html>
