@@ -12,11 +12,11 @@ const port = process.env.PORT || 5000;
 
 // middleware
 app.use(cors());
-app.use(express.json());        // parsing json
+app.use(express.json());        // parsing json module
 
 // Set up db uri env var->from mongodb cluster connect
 const uri = process.env.MONGO_URI;
-mongoose.connect(uri, { useNewUrlParser: true, useCreateIndex: true }, );
+mongoose.connect(uri, { useNewUrlParser: true, useCreateIndex: true , useUnifiedTopology: true}, );
 const connection = mongoose.connection;
 
 
@@ -24,6 +24,7 @@ const connection = mongoose.connection;
 connection.once('open', () => {
     console.log("MongoDB database connection established successfully");
 });
+
 
 // set up routes use
 const crimesRouter = require('./routes/crimes');
