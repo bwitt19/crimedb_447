@@ -1,3 +1,4 @@
 .env
+.dockerignore
 /backend/node_modules/*
 *~

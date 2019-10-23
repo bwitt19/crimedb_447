@@ -4,10 +4,13 @@ let User = require('../models/user.model');
 // .get endpoint checking to see if an account exists for user log in 
 router.route('/').get((req, res) => {
     
+    var user = new String(req.body.user);
+    var pass = new String(req.body.pass);
+    
     // Check to see if we can find an account with a matching username and password
     User.findOne({
-        'user': { req.body.user },
-        'pass': { req.body.pass }
+        'user': { user },
+        'pass': { pass }
     }) 
     
     // If the user exists, return their filters that they have saved
@@ -30,7 +33,7 @@ router.route('/').post((req, res) => {
         if (err) return console.error(err);
         
         console.log(retUser._id + "Saved to account collection");
-    }    
+    });    
     
 });
 
