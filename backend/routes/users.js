@@ -1,56 +1,86 @@
 const router = require('express').Router();
 const User = require('../models/user.model');
+var mongoose = require('mongoose');
 
-/*
+
 // .get endpoint checking to see if an account exists for user log in 
-router.route('/').get((req, res) => {
+router.route('/login').get((req, res) => {
     
-    var user = new String(req.body.user);
-    var pass = new String(req.body.pass);
+    var in_user = new String(req.body.user_name);
+    var in_pass = new String(req.body.password);
     
     // Check to see if we can find an account with a matching username and password
     User.findOne({
-        'user': { user },
-        'pass': { pass }
+        'user_name': { in_user },
+        'password': { in_pass }
     }) 
     
     // If the user exists, return their filters that they have saved
-    .then(users => res.json(users.filters))
-    .catch(err => res.status(400).json('Error: ' + err));
+    .then(users => res.json({ success: true, filters: users.filters }))
+    .catch(err => res.status(400).json({ success: false, e_msg: "Incorrect username or password." }));   
+    
+    return res;
 });
-*/
+
 
 // .post endpoint to add a new user to the database
-router.post("/register", (req, res) => {
-    
+router.route('/register').post((req, res) => {  
+  
+    const in_user = new String(req.body.user_name);
+    const in_pass = new String(req.body.password);
+  
     // Check to see if the username already exists
-    User.findOne({ user_name: req.body.user_name }).then(userCheck => {
+    User.findOne({ user_name: in_user }).then(userCheck => {
+        
+        // If user found
         if(userCheck) {
-            return res.status(400).json({ userCheck: "Username already exists." });
+            return res.status(400).json({ success: false, e_msg: "Username already exists." });
         } 
         
-        // If the username is not in use create the account
+        // If the username is not in use, create the account
         else {
+                        
             // Create the new user Schema
             var user = new User({
-                _id: "1",
-                user_name: req.body.user_name,
-                password: req.body.password,
+                _id: mongoose.Types.ObjectId(),
+                user_name: in_user,
+                password: in_pass,
                 filters: []
-            });
-            
+            })            
             
             // Save it to the database
             user.save(function (err, retUser) {
                 if (err) return console.error(err);
         
-                console.log(retUser._id + "Saved to account collection");
+                console.log("New user ("+user._id+") added to account_info collection");
             })
-            .then(user => res.json(user))
-            .catch(err => console.log(err));
-            
+            return res.json({ success: true });
+                       
         }
     });
 });
+
+
+// .put endpoint to update the filters for a user
+router.route('/filter').put((req, res) => {
+    
+    const in_filters = new Array(req.body.filters);
+    const in_user = new String(req.body.user_name);
+
+    // Find the current user and update their filters array
+    User.findOneAndUpdate( {user_name: in_user}, {filters: in_filters} ).then(userCheck => {
+        
+        // If no user found
+        if(!userCheck) {
+            return res.status(400).json({ success: false, e_msg: "Error in updating filter" });
+        } 
+
+        // Return that the change was successful
+        return res.json({ success: true });
+
+    });
+    
+});
+
 
 module.exports = router;

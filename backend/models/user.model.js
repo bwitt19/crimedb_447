@@ -7,7 +7,8 @@ const userSchema = new Schema({
     password: {type: String, required: true},
     filters: {type: Array, default: []}
 },
-{ collection: 'account_info' });
+{ collection: 'account_info' },
+{ versionKey: '1.0' });
 
 // compile model from schema
 const UserInfoPt = mongoose.model('User', userSchema, 'account_info');
