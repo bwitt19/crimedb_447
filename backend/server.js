@@ -29,10 +29,12 @@ connection.once('open', () => {
 // set up routes use
 const crimesRouter = require('./routes/crimes');
 const usersRouter = require('./routes/users');
+const filtersRouter = require('./routes/filters');
 
 // visiting localhost/crimes -> loads everything in crimesRouter
 app.use('/crimes', crimesRouter); 
 app.use('/users', usersRouter);
+app.use('/filter', filtersRouter);
 
 // Start server
 app.listen(port, () => {
