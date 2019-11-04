@@ -3,7 +3,9 @@ let Crime = require('../models/crime.model');
 
 // --Crimes route endpoints 
 
-// --get query endpoint
+/**
+ * /api/filter:
+ */
 router.route('/api/filter').get((req, res) => {
     console.log(`get: ${JSON.stringify(req.query)}`);
 
@@ -22,7 +24,8 @@ router.route('/api/filter').get((req, res) => {
         .catch(err => res.status(400).json('Error: ' + err));
     } 
     // --Simple filters
-    else if ( typeof req.query.neighborhood != 'undefined' || 
+    else if ( 
+        typeof req.query.neighborhood != 'undefined' || 
         typeof req.query.crimecode != 'undefined' ||
         typeof req.query.premise != 'undefined' ||
         typeof req.query.premise != 'undefined' ||
@@ -42,7 +45,7 @@ router.route('/api/filter').get((req, res) => {
         // TODO: Return query error
     }
 });
-
+    
 
 // .post filtering endpoint (TODO: remove)
 router.route('/field/:field/value/:value').post((req, res) => {
@@ -60,7 +63,7 @@ router.route('/field/:field/value/:value').post((req, res) => {
     }).limit(5)    
     
     .then(crimes => {res.json(crimes)})
-    .catch(err => res.status(400).json('Error: ' + err));
+    .catch(err => res.status(400).json( 'Error: ' + err)); // TODO: Add success = true, error e_msg
 });
 
 module.exports = router;
