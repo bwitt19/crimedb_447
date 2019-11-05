@@ -19,7 +19,7 @@ router.route('/api/login').get((req, res) => {
             return res.status(400).json({ success: false, e_msg: "Incorrect username or password." });
         }
 
-        // If the user exists, find all their filter names
+        // If the user exists, find all their filters
         Filter.find({ 'user_name': { in_user } })
         .then(filters => {
             var retArray = []
@@ -29,11 +29,11 @@ router.route('/api/login').get((req, res) => {
                 return res.json({ success: true, filter_names: retArray});
             }
 
-            // If there are filters, add their names to an Array to return to front-end
+            // If there are filters, add them to an Array to return to front-end
             filters.forEach(function(idx) {
-                retArray.push(idx.filter_name);
+                retArray.push(idx);
             });
-            return res.json({ success: true, filter_names: retArray });
+            return res.json({ success: true, user_filters: retArray });
 
         });
     

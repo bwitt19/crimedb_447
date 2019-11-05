@@ -47,27 +47,6 @@ router.route('/api/user_filter').post((req, res) => {
 });
 
 
-// .get endpoint to get the specified filter for a user
-router.route('/api/get_user_filter').get((req, res) => {
-
-    const in_user = new String(req.body.user_name);
-    const in_filter_name = new String(req.body.filter_name)
-
-    // Find the specified filter
-    Filter.findOne({ 'user_name': { in_user }, 'filter_name': {in_filter_name} })
-    .then(filterCheck => {
-        
-        // If no filter was found with that given name
-        if(!filterCheck) {
-            return res.status(400).json({ success: false, e_msg: "No filter with name found" })
-        }
-
-        // If a filter with the given name for the user is found return it
-        return res.json({ success: true, filter: filterCheck});
-    });
-});
-
-
 // .put endpoint to update the filters for a user
 router.route('/api/user_filter').put((req, res) => {
     
@@ -99,6 +78,50 @@ router.route('/api/user_filter').put((req, res) => {
 
     });
     
+});
+
+
+// .delete endpoint to delete a filter from the database
+router.route('/api/user_filter').delete((req, res) => {  
+  
+    const in_filter_name = new String(req.body.user_name);
+    const in_user = new String(req.body.user_name);
+  
+    // Check to see if the filter with that name already exists
+    Filter.deleteOne({ 'user_name': { in_user }, 'filter_name': { in_filter_name } })
+    .then(filterCheck => {
+        
+        // If filter was not deleted
+        if(!filterCheck) {
+            return res.status(400).json({ success: false, e_msg: "Filter could not be found" });
+        } 
+        
+        // If the filter was deleted
+        else {
+            return res.json({ success: true });         
+        }
+    });
+});
+
+
+// .get endpoint to get the specified filter for a user
+router.route('/api/user_filter').get((req, res) => {
+
+    const in_user = new String(req.body.user_name);
+    const in_filter_name = new String(req.body.filter_name)
+
+    // Find the specified filter
+    Filter.findOne({ 'user_name': { in_user }, 'filter_name': {in_filter_name} })
+    .then(filterCheck => {
+        
+        // If no filter was found with that given name
+        if(!filterCheck) {
+            return res.status(400).json({ success: false, e_msg: "No filter with name found" })
+        }
+
+        // If a filter with the given name for the user is found return it
+        return res.json({ success: true, filter: filterCheck});
+    });
 });
 
 
