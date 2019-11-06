@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const filterSchema = new Schema({
-    //_id: {type: String, required: false},
+    _id: {type: String, required: false},
     user_name: {type: String, required: true},
     filter_name: {type:String, required: true},
     lower_date: {type: Date, required: false},

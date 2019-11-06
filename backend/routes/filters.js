@@ -3,18 +3,18 @@ const Filter = require('../models/filter.model');
 
 
 // .post endpoint to add a new filter to the database
-router.route('/api/user_filter').post((req, res) => {  
+router.route('/user_filter').post((req, res) => {  
   
-    const in_filter_name = new String(req.body.user_name);
+    const in_filter_name = new String(req.body.filter_name);
     const in_user = new String(req.body.user_name);
   
     // Check to see if the filter with that name already exists
-    Filter.findOne({ 'user_name': { in_user }, 'filter_name': { in_filter_name } })
+    Filter.findOne({ 'user_name': in_user, 'filter_name': in_filter_name })
     .then(filterCheck => {
         
         // If filter found
         if(filterCheck) {
-            return res.status(400).json({ success: false, e_msg: "Filter with that name already exists." });
+            return res.status(400).json({ 'success': false, 'e_msg': "Filter with that name already exists." });
         } 
         
         // If the filter name is not in use, create the filter
@@ -22,7 +22,7 @@ router.route('/api/user_filter').post((req, res) => {
                         
             // Create the new filter Schema
             var filter = new Filter({
-                //_id: mongoose.Types.ObjectId(),
+                _id: mongoose.Types.ObjectId(),
                 user_name: in_user, 
                 filter_name: in_filter_name,
                 lower_date: String(req.body.lower_date),
@@ -40,7 +40,7 @@ router.route('/api/user_filter').post((req, res) => {
         
                 console.log(user_name+" added "+filter.filter_name+" to their filters collection");
             })
-            return res.json({ success: true });
+            return res.json({ 'success': true });
                        
         }
     });
@@ -48,7 +48,7 @@ router.route('/api/user_filter').post((req, res) => {
 
 
 // .put endpoint to update the filters for a user
-router.route('/api/user_filter').put((req, res) => {
+router.route('/user_filter').put((req, res) => {
     
     const in_old_filter_name = new Array(req.body.filters);
     const in_user = new String(req.body.user_name);
@@ -82,7 +82,7 @@ router.route('/api/user_filter').put((req, res) => {
 
 
 // .delete endpoint to delete a filter from the database
-router.route('/api/user_filter').delete((req, res) => {  
+router.route('/user_filter').delete((req, res) => {  
   
     const in_filter_name = new String(req.body.user_name);
     const in_user = new String(req.body.user_name);
@@ -105,7 +105,7 @@ router.route('/api/user_filter').delete((req, res) => {
 
 
 // .get endpoint to get the specified filter for a user
-router.route('/api/user_filter').get((req, res) => {
+/*router.route('/user_filter').get((req, res) => {
 
     const in_user = new String(req.body.user_name);
     const in_filter_name = new String(req.body.filter_name)
@@ -123,6 +123,6 @@ router.route('/api/user_filter').get((req, res) => {
         return res.json({ success: true, filter: filterCheck});
     });
 });
-
+*/
 
 module.exports = router;
