@@ -15,9 +15,9 @@ router.route('/login').get((req, res) => {
     .then(userCheck => {
 
         // If the user did not exist return an error
-        if(!userCheck) {
+        if(!userCheck) 
             return res.status(400).json({ 'success': false, 'e_msg': "Incorrect username or password." });
-        }
+        
 
         // If the user exists, find all their filters
         Filter.find({ 'user_name': in_user })
@@ -46,9 +46,9 @@ router.route('/register').post((req, res) => {
     User.findOne({ 'user_name': in_user }).then(userCheck => {
         
         // If user found
-        if(userCheck) {
-            return res.status(400).json({ 'success': false, 'e_msg': "Username already exists." });
-        } 
+        if(userCheck) 
+            return res.status(400).json({ 'success': false, 'e_msg': "Username already registered to an account." });
+         
         
         // If the username is not in use, create the account
         else {

@@ -1,5 +1,8 @@
 const router = require('express').Router();
+const mongoose = require('mongoose');
+mongoose.set('useFindAndModify', false);
 const Filter = require('../models/filter.model');
+const User = require('../models/user.model');
 
 
 // .post endpoint to add a new filter to the database
@@ -7,50 +10,65 @@ router.route('/user_filter').post((req, res) => {
   
     const in_filter_name = new String(req.body.filter_name);
     const in_user = new String(req.body.user_name);
-  
-    // Check to see if the filter with that name already exists
-    Filter.findOne({ 'user_name': in_user, 'filter_name': in_filter_name })
-    .then(filterCheck => {
-        
-        // If filter found
-        if(filterCheck) {
-            return res.status(400).json({ 'success': false, 'e_msg': "Filter with that name already exists." });
-        } 
-        
-        // If the filter name is not in use, create the filter
-        else {
-                        
-            // Create the new filter Schema
-            var filter = new Filter({
-                _id: mongoose.Types.ObjectId(),
-                user_name: in_user, 
-                filter_name: in_filter_name,
-                lower_date: String(req.body.lower_date),
-                upper_date: String(req.body.upper_date),
-                description: String(req.body.description),
-                weapon: String(req.body.weapon),
-                district: String(req.body.district),
-                neighborhood: String(req.body.neighborhood),
-                premise: String(req.body.premise)
-            })            
-            
-            // Save it to the database
-            filter.save(function (err, retUser) {
-                if (err) return console.error(err);
-        
-                console.log(user_name+" added "+filter.filter_name+" to their filters collection");
-            })
-            return res.json({ 'success': true });
-                       
+    var userFound = false;
+
+    // Make sure the supplied user_name is valid
+    User.findOne({ 'user_name': in_user })
+    .then(userCheck => {
+
+        // If the user_name does not exist, return error msg
+        if(!userCheck) {
+            return res.status(400).json({ 'success': false, 'e_msg': 'Username invalid' });
         }
+
+        // Check to see if the filter with that name already exists
+        Filter.findOne({ 'user_name': in_user, 'filter_name': in_filter_name })
+        .then(filterCheck => {
+        
+            // If the user already has a filter with that name
+            if(filterCheck) 
+                return res.status(400).json({ 'success': false, 'e_msg': "Filter with that name already exists." });
+              
+            // If the filter name is not in use, create the filter
+            else {
+                        
+                // Create the new filter Schema
+                var filter = new Filter({
+                    _id: mongoose.Types.ObjectId(),
+                    user_name: in_user, 
+                    filter_name: in_filter_name,
+                    lower_date: String(req.body.lower_date),
+                    upper_date: String(req.body.upper_date),
+                    description: String(req.body.description),
+                    weapon: String(req.body.weapon),
+                    district: String(req.body.district),
+                    neighborhood: String(req.body.neighborhood),
+                    premise: String(req.body.premise)
+                })            
+            
+                // Save it to the database
+                filter.save(function (err, retUser) {
+                    if (err) 
+                        return console.error(err);
+        
+                    console.log(in_user+" added "+in_filter_name+" to their filters collection");
+                })
+                return res.json({ 'success': true });
+                       
+            }
+        });
+
     });
+
+        
+    
 });
 
 
 // .put endpoint to update the filters for a user
 router.route('/user_filter').put((req, res) => {
     
-    const in_old_filter_name = new Array(req.body.filters);
+    const in_old_filter_name = new String(req.body.filter_name);
     const in_user = new String(req.body.user_name);
 
     const in_filter = { user_name: in_user, 
@@ -65,13 +83,13 @@ router.route('/user_filter').put((req, res) => {
                       };
 
     // Find the current user and update their filters array
-    Filter.findOneAndUpdate({ 'user_name': { in_user }, 'filter_name': { in_old_filter_name }}, { in_filter } )
+    Filter.findOneAndUpdate({ 'user_name': in_user, 'filter_name': in_old_filter_name }, in_filter )
     .then(filterCheck => {
         
         // If no user found
-        if(!filterCheck) {
+        if(!filterCheck) 
             return res.status(400).json({ success: false, e_msg: "Error in updating filter" });
-        } 
+        
 
         // Return that the change was successful
         return res.json({ success: true });
@@ -84,22 +102,21 @@ router.route('/user_filter').put((req, res) => {
 // .delete endpoint to delete a filter from the database
 router.route('/user_filter').delete((req, res) => {  
   
-    const in_filter_name = new String(req.body.user_name);
+    const in_filter_name = new String(req.body.filter_name);
     const in_user = new String(req.body.user_name);
   
     // Check to see if the filter with that name already exists
-    Filter.deleteOne({ 'user_name': { in_user }, 'filter_name': { in_filter_name } })
-    .then(filterCheck => {
-        
+    Filter.deleteOne({ 'user_name': in_user, 'filter_name': in_filter_name },
+    function (err) {
+        console.log(err);
         // If filter was not deleted
-        if(!filterCheck) {
+        if(err) 
             return res.status(400).json({ success: false, e_msg: "Filter could not be found" });
-        } 
-        
+                 
         // If the filter was deleted
-        else {
+        else 
             return res.json({ success: true });         
-        }
+        
     });
 });
 
