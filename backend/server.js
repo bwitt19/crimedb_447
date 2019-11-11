@@ -31,8 +31,8 @@ const crimesRouter = require('./routes/crimes');
 const usersRouter = require('./routes/users');
 
 // visiting localhost/crimes -> loads everything in crimesRouter
-app.use('/crimes', crimesRouter); 
-app.use('/users', usersRouter);
+app.use('/api/crimes', crimesRouter); 
+app.use('/api/users', usersRouter);
 
 // Start server
 app.listen(port, () => {

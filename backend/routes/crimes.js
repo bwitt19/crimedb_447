@@ -1,69 +1,87 @@
 const router = require('express').Router();
 let Crime = require('../models/crime.model');
 
-// --Crimes route endpoints 
+
+const MAX_LIMIT = 2000;         // define a max limit of returned crime objects
+const DEFAULT_LIMIT = 50;
 
 /**
- * /api/filter:
- */
-router.route('/api/filter').get((req, res) => {
-    console.log(`get: ${JSON.stringify(req.query)}`);
+ * /crimes/api/filter
+ */  
+router.route('/filter').get((req, res) => {
+    var lim = DEFAULT_LIMIT; 
+    var mongo_query = {};       // query parameters go here after being parsed
+    
+    if ( typeof req.query.limit == 'undefined') {
 
-    // --Range of data filters
-    if ( typeof req.query.date != 'undefined' || 
-        typeof req.query.time != 'undefined' ||
-        typeof req.query.long != 'undefined' ||
-        typeof req.query.lat != 'undefined'
-    ) {
-        
-        // parse into a passed range to mongo find
-        Crime.find(
-            req.query
-            ).limit(100)
-        .then(crimes => res.json(crime))
-        .catch(err => res.status(400).json('Error: ' + err));
-    } 
-    // --Simple filters
-    else if ( 
+        lim = DEFAULT_LIMIT;
+    } else {
+
+        if ( req.query.limit > MAX_LIMIT) {
+
+            console.log("LIMIT EXCEEDS MAX");
+            lim = MAX_LIMIT;
+        } else {
+
+            lim = parseInt(req.query.limit);
+        }
+        delete req.query['limit'];     // remove for interference with actual query
+    }
+
+    // --Passed straight   
+    // TODO: parse all to include $in support for multiple entries, see object key length
+    if (
+        typeof req.query.date != 'undefined' ||
         typeof req.query.neighborhood != 'undefined' || 
         typeof req.query.crimecode != 'undefined' ||
-        typeof req.query.premise != 'undefined' ||
         typeof req.query.premise != 'undefined' ||
         typeof req.query.district != 'undefined' ||
         typeof req.query.weapon != 'undefined' ||
         typeof req.query.type != 'undefined'
-    ) {
-        Crime.find( 
-            
-            req.query
-            // TODO: add multiple values for one field (knife or firearm, ie checklist)
+        ) {
+        // build json query
+        mongo_query = req.query;
+        
+    } 
 
-        ).limit(100)
-        .then(crimes => res.json(crimes))
-        .catch(err => res.status(400).json('Error: ' + err));
+    // -- Date parsing: (overwrites single date)
+    if (typeof req.query.lower_date != 'undefined') {
+        mongo_query.date = { $gte: new Date() };
+        mongo_query.date.$gte = new Date(req.query.lower_date);
+    } 
+    if (typeof req.query.upper_date != 'undefined') {
+        mongo_query.date = { $lte: new Date() }; 
+        mongo_query.date.$lte = new Date(req.query.upper_date);
+    }
+    
+    // --Execute query
+    if (typeof mongo_query != 'undefined') {
+        // --Find (query)
+        Crime.find(
+            mongo_query
+            ).limit(lim)
+            .then(crimes => res.json({"count":Object.keys(crimes).length, crimes} ) )
+            .catch(err => res.status(400).json({ success: false, e_msg: err}));
+            
     } else {
-        // TODO: Return query error
+        // --Find All
+        Crime.find().limit(lim)
+        .then(crimes => res.json({crimes}))
+        .catch(err => res.status(400).json({ success: false, e_msg: err}));
+
     }
 });
-    
 
-// .post filtering endpoint (TODO: remove)
-router.route('/field/:field/value/:value').post((req, res) => {
+// --Testing route, for sending mongo queries directly
+router.route('/test').get( (req,res) => {
 
-    const field = req.params.field;
-    console.log(`test ${field}`);
-    const date = new Date(req.body.date);
-    
-    var year=date.getYear();
-    console.log(`${year +1900}`);
-    
-    // all found entries added to crimes variable
-    Crime.find({
-        'date': { $lte: date }
-    }).limit(5)    
-    
+    Crime.find(
+        req.query
+        //{"weapon": { $in: ["KNIFE", "HANDS"]}}
+        //{"date": {$lte: new Date("2017")}}
+    ).limit(20)
     .then(crimes => {res.json(crimes)})
-    .catch(err => res.status(400).json( 'Error: ' + err)); // TODO: Add success = true, error e_msg
+    .catch(err => res.status(400).json( {success: false, e_msg: err, query: req.query} ));
 });
 
 module.exports = router;
