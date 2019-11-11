@@ -32,18 +32,18 @@ router.route('/user_filter').post((req, res) => {
             // If the filter name is not in use, create the filter
             else {
                         
-                // Create the new filter Schema
+                // Create the new filter Schema doing input validation on each input
                 var filter = new Filter({
                     _id: mongoose.Types.ObjectId(),
                     user_name: in_user, 
                     filter_name: in_filter_name,
-                    lower_date: String(req.body.lower_date),
-                    upper_date: String(req.body.upper_date),
-                    description: String(req.body.description),
-                    weapon: String(req.body.weapon),
-                    district: String(req.body.district),
-                    neighborhood: String(req.body.neighborhood),
-                    premise: String(req.body.premise)
+                    lower_date: (String(req.body.lower_date).length != 0 ? String(req.body.lower_date) : "1970-01-01T00:00:00Z"),
+                    upper_date: (String(req.body.upper_date).length != 0 ? String(req.body.upper_date) : "1970-01-01T00:00:00Z"),
+                    description: (String(req.body.description).length != 0 ? String(req.body.description) : "ALL"),
+                    weapon: (String(req.body.weapon).length != 0 ? String(req.body.weapon) : "ALL"),
+                    district: (String(req.body.district).length != 0 ? String(req.body.district) : "ALL"),
+                    neighborhood: (String(req.body.neighborhood).length != 0 ? String(req.body.neighborhood) : "ALL"),
+                    premise: (String(req.body.premise).length != 0 ? String(req.body.premise) : "ALL")                      
                 })            
             
                 // Save it to the database
@@ -71,15 +71,16 @@ router.route('/user_filter').put((req, res) => {
     const in_old_filter_name = new String(req.body.filter_name);
     const in_user = new String(req.body.user_name);
 
+    // Create the new filter doing input validation on each input
     const in_filter = { user_name: in_user, 
-                        filter_name: String(req.body.new_filter_name),
-                        lower_date: String(req.body.lower_date),
-                        upper_date: String(req.body.upper_date),
-                        description: String(req.body.description),
-                        weapon: String(req.body.weapon),
-                        district: String(req.body.district),
-                        neighborhood: String(req.body.neighborhood),
-                        premise: String(req.body.premise)
+                        filter_name: String(req.body.new_filter_name).length != 0 ? String(req.body.new_filter_name) : in_old_filter_name,
+                        lower_date: (String(req.body.lower_date).length != 0 ? String(req.body.lower_date) : "1970-01-01T00:00:00Z"),
+                        upper_date: (String(req.body.upper_date).length != 0 ? String(req.body.lower_date) : "1970-01-01T00:00:00Z"),
+                        description: (String(req.body.description).length != 0 ? String(req.body.description) : "ALL"),
+                        weapon: (String(req.body.weapon).length != 0 ? String(req.body.weapon) : "ALL"),
+                        district: (String(req.body.district).length != 0 ? String(req.body.district) : "ALL"),
+                        neighborhood: (String(req.body.neighborhood).length != 0 ? String(req.body.neighborhood) : "ALL"),
+                        premise: (String(req.body.premise).length != 0 ? String(req.body.premise) : "ALL")
                       };
 
     // Find the current user and update their filters array
@@ -122,7 +123,7 @@ router.route('/user_filter').delete((req, res) => {
 
 
 // .get endpoint to get the specified filter for a user
-/*router.route('/user_filter').get((req, res) => {
+router.route('/user_filter').get((req, res) => {
 
     const in_user = new String(req.body.user_name);
     const in_filter_name = new String(req.body.filter_name)
@@ -140,6 +141,6 @@ router.route('/user_filter').delete((req, res) => {
         return res.json({ success: true, filter: filterCheck});
     });
 });
-*/
+
 
 module.exports = router;

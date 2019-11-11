@@ -5,13 +5,13 @@ const filterSchema = new Schema({
     _id: {type: String, required: false},
     user_name: {type: String, required: true},
     filter_name: {type:String, required: true},
-    lower_date: {type: Date, required: false},
-    upper_date: {type: Date, required: false},
-    description: {type: String, required: false},
-    weapon: {type: String, required: false},
-    district: {type: String, required: false},
-    neighborhood: {type: String, required: false},
-    premise: {type: String, required: false}
+    lower_date: {type: Date, required: false, default: Date(1970,1,1)},
+    upper_date: {type: Date, required: false, default: Date(1970,1,1)},
+    description: {type: String, required: false, default: "ALL"},
+    weapon: {type: String, required: false, default: "ALL"},
+    district: {type: String, required: false, default: "ALL"},
+    neighborhood: {type: String, required: false, default: "ALL"},
+    premise: {type: String, required: false, default: "ALL"}
 },
 { collection: 'saved_filters' },
 { versionKey: '1.0' });
