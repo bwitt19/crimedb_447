@@ -2,7 +2,7 @@ const router = require('express').Router();
 let Crime = require('../models/crime.model');
 
 
-const MAX_LIMIT = 2000;         // define a max limit of returned crime objects
+const MAX_LIMIT = 10000;         // define a max limit of returned crime objects
 const DEFAULT_LIMIT = 50;
 
 /**
@@ -28,8 +28,7 @@ router.route('/filter').get((req, res) => {
         delete req.query['limit'];     // remove for interference with actual query
     }
 
-    // --Passed straight   
-    // TODO: parse all to include $in support for multiple entries, see object key length
+    // --Direct to query, no parsing needed   
     if (
         typeof req.query.date != 'undefined' ||
         typeof req.query.neighborhood != 'undefined' || 
@@ -39,19 +38,26 @@ router.route('/filter').get((req, res) => {
         typeof req.query.weapon != 'undefined' ||
         typeof req.query.type != 'undefined'
         ) {
-        // build json query
+
         mongo_query = req.query;
-        
+       
     } 
 
     // -- Date parsing: (overwrites single date)
-    if (typeof req.query.lower_date != 'undefined') {
-        mongo_query.date = { $gte: new Date() };
-        mongo_query.date.$gte = new Date(req.query.lower_date);
+    if (typeof req.query.lower_date != 'undefined' && typeof req.query.upper_date != 'undefined') {
+        mongo_query.date = { $gte: new Date(req.query.lower_date), $lte: new Date(req.query.upper_date) };
+        delete mongo_query.lower_date;
+        delete mongo_query.upper_date;
+        console.log(mongo_query.date);
+
+    }
+    else if (typeof req.query.lower_date != 'undefined') {
+        mongo_query.date = { $gte: new Date(req.query.lower_date) };
+        delete mongo_query.lower_date;
     } 
-    if (typeof req.query.upper_date != 'undefined') {
-        mongo_query.date = { $lte: new Date() }; 
-        mongo_query.date.$lte = new Date(req.query.upper_date);
+    else if (typeof req.query.upper_date != 'undefined') {
+        mongo_query.date = { $lte: new Date(req.query.upper_date) }; 
+        delete mongo_query.upper_date;
     }
     
     // --Execute query
@@ -60,8 +66,8 @@ router.route('/filter').get((req, res) => {
         Crime.find(
             mongo_query
             ).limit(lim)
-            .then(crimes => res.json({"count":Object.keys(crimes).length, crimes} ) )
-            .catch(err => res.status(400).json({ success: false, e_msg: err}));
+            .then(crimes => res.json({"success": true, "count":Object.keys(crimes).length, crimes} ) )
+            .catch(err => res.status(400).json({ success: false, parsed_query: mongo_query, e_msg: err}));
             
     } else {
         // --Find All
