@@ -3,7 +3,7 @@ let Crime = require('../models/crime.model');
 
 
 const MAX_LIMIT = 10000;         // define a max limit of returned crime objects
-const DEFAULT_LIMIT = 50;
+const DEFAULT_LIMIT = 5000;
 
 /**
  * /crimes/api/filter
@@ -13,16 +13,14 @@ router.route('/filter').get((req, res) => {
     var mongo_query = {};       // query parameters go here after being parsed
     
     if ( typeof req.query.limit == 'undefined') {
-
         lim = DEFAULT_LIMIT;
-    } else {
-
+    } 
+    else {
         if ( req.query.limit > MAX_LIMIT) {
-
             console.log("LIMIT EXCEEDS MAX");
             lim = MAX_LIMIT;
-        } else {
-
+        } 
+        else {
             lim = parseInt(req.query.limit);
         }
         delete req.query['limit'];     // remove for interference with actual query
@@ -40,7 +38,6 @@ router.route('/filter').get((req, res) => {
         ) {
 
         mongo_query = req.query;
-       
     } 
 
     // -- Date parsing: (overwrites single date)
@@ -48,8 +45,6 @@ router.route('/filter').get((req, res) => {
         mongo_query.date = { $gte: new Date(req.query.lower_date), $lte: new Date(req.query.upper_date) };
         delete mongo_query.lower_date;
         delete mongo_query.upper_date;
-        console.log(mongo_query.date);
-
     }
     else if (typeof req.query.lower_date != 'undefined') {
         mongo_query.date = { $gte: new Date(req.query.lower_date) };
@@ -66,13 +61,13 @@ router.route('/filter').get((req, res) => {
         Crime.find(
             mongo_query
             ).limit(lim)
-            .then(crimes => res.json({"success": true, "count":Object.keys(crimes).length, crimes} ) )
+            .then(crimes => res.json({success: true, count:Object.keys(crimes).length, crimes} ) )
             .catch(err => res.status(400).json({ success: false, parsed_query: mongo_query, e_msg: err}));
             
     } else {
         // --Find All
         Crime.find().limit(lim)
-        .then(crimes => res.json({crimes}))
+        .then(crimes => res.json({success: true, count: Object.keys(crimes).length, crimes}))
         .catch(err => res.status(400).json({ success: false, e_msg: err}));
 
     }
