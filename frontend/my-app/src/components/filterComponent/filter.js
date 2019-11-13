@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import Accordion from 'react-bootstrap/Accordion';
 import Card from 'react-bootstrap/Card';
-import Form from 'react-bootstrap/Form';
+import Table from './tableComponent/table';
 
 class Filter extends Component {
     render() {
@@ -9,11 +9,11 @@ class Filter extends Component {
             <Accordion>
                 <Card>
                     <Accordion.Toggle as={Card.Header} eventKey="0">
-                        Filters
+                        Table
                     </Accordion.Toggle>
                     <Accordion.Collapse eventKey="0">
                         <Card.Body>
-                            
+                            <Table/>
                         </Card.Body>
                     </Accordion.Collapse>
                 </Card>
