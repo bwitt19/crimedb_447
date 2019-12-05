@@ -1,8 +1,8 @@
 const router = require('express').Router();
 const mongoose = require('mongoose');
+const jwt = require('jsonwebtoken');
 mongoose.set('useFindAndModify', false);
 const Filter = require('../models/filter.model');
-const User = require('../models/user.model');
 
 
 // .post endpoint to add a new filter to the database
@@ -10,18 +10,17 @@ router.route('/user_filter').post((req, res) => {
   
     const in_filter_name = new String(req.body.filter_name);
     const in_user = new String(req.body.user_name);
-    var userFound = false;
 
-    // Make sure the supplied user_name is valid
-    User.findOne({ 'user_name': in_user })
-    .then(userCheck => {
+    // Make sure the supplied user is authenticated
+    jwt.verify(String(req.body.token), process.env.JWT_KEY, function(err, decoded) {
 
-        // If the user_name does not exist, return error msg
-        if(!userCheck) {
-            return res.status(400).json({ 'success': false, 'e_msg': 'Username invalid' });
+        // If the user is not authenticated return an error
+        if(err) {
+            console.log(err);
+            return res.status(400).json({ 'success': false, 'e_msg': 'Failed to authenticate' });
         }
 
-        // Check to see if the filter with that name already exists
+        // Check to see if the filter with that name and user already exists
         Filter.findOne({ 'user_name': in_user, 'filter_name': in_filter_name })
         .then(filterCheck => {
         
@@ -83,18 +82,28 @@ router.route('/user_filter').put((req, res) => {
                         premise: (String(req.body.premise).length != 0 ? String(req.body.premise) : "ALL")
                       };
 
-    // Find the current user and update their filters array
-    Filter.findOneAndUpdate({ 'user_name': in_user, 'filter_name': in_old_filter_name }, in_filter )
-    .then(filterCheck => {
+    // Make sure the supplied user is authenticated
+    jwt.verify(String(req.body.token), process.env.JWT_KEY, function(err, decoded) {
+
+        // If the user is not authenticated return an error
+        if(err) {
+            console.log(err);
+            return res.status(400).json({ 'success': false, 'e_msg': 'Failed to authenticate' });
+        }
+
+        // Find the current user and update their filters array
+        Filter.findOneAndUpdate({ 'user_name': in_user, 'filter_name': in_old_filter_name }, in_filter )
+        .then(filterCheck => {
         
-        // If no user found
-        if(!filterCheck) 
-            return res.status(400).json({ success: false, e_msg: "Error in updating filter" });
+            // If no user found
+            if(!filterCheck) 
+                return res.status(400).json({ success: false, e_msg: "Error in updating filter" });
         
 
-        // Return that the change was successful
-        return res.json({ success: true });
-
+            // Return that the change was successful
+            return res.json({ success: true });
+        
+        });
     });
     
 });
@@ -106,18 +115,28 @@ router.route('/user_filter').delete((req, res) => {
     const in_filter_name = new String(req.body.filter_name);
     const in_user = new String(req.body.user_name);
   
-    // Check to see if the filter with that name already exists
-    Filter.deleteOne({ 'user_name': in_user, 'filter_name': in_filter_name },
-    function (err) {
-        console.log(err);
-        // If filter was not deleted
-        if(err) 
-            return res.status(400).json({ success: false, e_msg: "Filter could not be found" });
+    // Make sure the supplied user is authenticated
+    jwt.verify(String(req.body.token), process.env.JWT_KEY, function(err, decoded) {
+
+        // If the user is not authenticated return an error
+        if(err) {
+            console.log(err);
+            return res.status(400).json({ 'success': false, 'e_msg': 'Failed to authenticate' });
+        }
+
+        // Check to see if the filter with that name already exists
+        Filter.deleteOne({ 'user_name': in_user, 'filter_name': in_filter_name },
+        function (err) {
+
+            // If filter was not deleted
+            if(err) 
+                return res.status(400).json({ success: false, e_msg: "Filter could not be found" });
                  
-        // If the filter was deleted
-        else 
-            return res.json({ success: true });         
+            // If the filter was deleted
+            else 
+                return res.json({ success: true });         
         
+        });
     });
 });
 
@@ -128,17 +147,28 @@ router.route('/user_filter').get((req, res) => {
     const in_user = new String(req.body.user_name);
     const in_filter_name = new String(req.body.filter_name)
 
-    // Find the specified filter
-    Filter.findOne({ 'user_name': { in_user }, 'filter_name': {in_filter_name} })
-    .then(filterCheck => {
-        
-        // If no filter was found with that given name
-        if(!filterCheck) {
-            return res.status(400).json({ success: false, e_msg: "No filter with name found" })
+    // Make sure the supplied user is authenticated
+    jwt.verify(String(req.body.token), process.env.JWT_KEY, function(err, decoded) {
+
+        // If the user is not authenticated return an error
+        if(err) {
+            console.log(err);
+            return res.status(400).json({ 'success': false, 'e_msg': 'Failed to authenticate' });
         }
 
-        // If a filter with the given name for the user is found return it
-        return res.json({ success: true, filter: filterCheck});
+        // Find the specified filter
+        Filter.findOne({ 'user_name': { in_user }, 'filter_name': {in_filter_name} })
+        .then(filterCheck => {
+        
+            // If no filter was found with that given name
+            if(!filterCheck) {
+                return res.status(400).json({ success: false, e_msg: "No filter with name found" })
+            }
+
+            // If a filter with the given name for the user is found return it
+            return res.json({ success: true, filter: filterCheck});
+
+        });
     });
 });
 

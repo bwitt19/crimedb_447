@@ -1,5 +1,7 @@
 const router = require('express').Router();
 const mongoose = require('mongoose');
+const jwt = require('jsonwebtoken');
+const bcrypt = require('bcryptjs');
 const User = require('../models/user.model');
 const Filter = require('../models/filter.model');
 
@@ -8,16 +10,20 @@ const Filter = require('../models/filter.model');
 router.route('/login').get((req, res) => {
     
     var in_user = new String(req.body.user_name);
-    var in_pass = new String(req.body.password);
+    var in_pass = String(req.body.password);
 
     // Check to see if we can find an account with a matching username and password
-    User.findOne({ 'user_name': in_user, 'password': in_pass }) 
+    User.findOne({ 'user_name': in_user}) 
     .then(userCheck => {
 
         // If the user did not exist return an error
         if(!userCheck) 
             return res.status(400).json({ 'success': false, 'e_msg': "Incorrect username or password." });
         
+        // Make sure correct password is entered
+        if(!bcrypt.compareSync(in_pass, userCheck.password))
+            return res.status(400).json({ 'success': false, 'e_msg': "Incorrect username or password."});
+
 
         // If the user exists, find all their filters
         Filter.find({ 'user_name': in_user })
@@ -28,7 +34,13 @@ router.route('/login').get((req, res) => {
             filters.forEach(function(idx) {
                 retArray.push(idx);
             });
-            return res.json({ 'success': true, 'user_name': in_user, 'user_filters': retArray });
+
+            // Create a token
+            var token = jwt.sign({id: userCheck._id}, process.env.JWT_KEY, {
+                expiresIn: 86400 // expires in 24 hours
+            })
+
+            return res.json({ 'success': true, 'token': token, 'user_filters': retArray });
 
         });
     
@@ -40,7 +52,7 @@ router.route('/login').get((req, res) => {
 router.route('/register').post((req, res) => {  
   
     const in_user = new String(req.body.user_name);
-    const in_pass = new String(req.body.password);
+    const in_pass = bcrypt.hashSync(String(req.body.password), 8);
 
     // Check to see if the username already exists
     User.findOne({ 'user_name': in_user }).then(userCheck => {
