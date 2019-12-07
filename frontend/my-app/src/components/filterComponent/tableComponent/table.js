@@ -49,128 +49,8 @@ const premiseSelectOptions = {
     5: 'APT/CONDO'
 };
 
-const crimes = [
-    {
-        id: 0,
-        date: 'Mon Jul 30 2018 11:29:02 GMT-0400 (Eastern Daylight Time)',
-        location: '3700 W GARRISON AVE',
-        description: 0,
-        weapon: 0,
-        district: 0,
-        neighborhood: 0,
-        long: -76.678,
-        lat:  39.344,
-        premise: 0
-    },
-    {
-        id: 1,
-        date: 'Mon Jul 16 2018 00:07:15 GMT-0400 (Eastern Daylight Time)',
-        location: '333 E EAST ST',
-        description: 1,
-        weapon: 0,
-        district: 2,
-        neighborhood: 1,
-        long: -76.532,
-        lat:  39.234,
-        premise: 0
-    },
-    {
-        id: 2,
-        date: 'Wed May 09 2018 19:08:26 GMT-0400 (Eastern Daylight Time)',
-        location: '370 W GARRISON AVE',
-        description: 2,
-        weapon: 1,
-        district: 0,
-        neighborhood: 0,
-        long: -76.638,
-        lat:  39.244,
-        premise: 1
-    },
-    {
-        id: 3,
-        date: 'Mon Jul 30 2018 11:29:02 GMT-0400 (Eastern Daylight Time)',
-        location: '888 N FAKE RD',
-        description: 0,
-        weapon: 0,
-        district: 2,
-        neighborhood: 1,
-        long: -76.628,
-        lat:  39.444,
-        premise: 0
-    },
-    {
-        id: 4,
-        date: 'Thu Sep 20 2018 00:44:17 GMT-0400 (Eastern Daylight Time)',
-        location: '37 W CHOPTANK AVE',
-        description: 2,
-        weapon: 2,
-        district: 1,
-        neighborhood: 2,
-        long: -76.678,
-        lat:  39.344,
-        premise: 2
-    },
-    {
-        id: 5,
-        date: 'Mon Jul 30 2018 11:29:02 GMT-0400 (Eastern Daylight Time)',
-        location: '3700 W GARRISON AVE',
-        description: 0,
-        weapon: 0,
-        district: 0,
-        neighborhood: 2,
-        long: -76.678,
-        lat:  39.344,
-        premise: 3
-    },
-    {
-        id: 6,
-        date: 'Wed May 09 2018 19:08:26 GMT-0400 (Eastern Daylight Time)',
-        location: '3700 W GARRISON AVE',
-        description: 1,
-        weapon: 1,
-        district: 0,
-        neighborhood: 0,
-        long: -76.678,
-        lat:  39.344,
-        premise: 0
-    },
-    {
-        id: 7,
-        date: 'Mon Jul 30 2018 11:29:02 GMT-0400 (Eastern Daylight Time)',
-        location: '4563 S SOUTH ST',
-        description: 0,
-        weapon: 3,
-        district: 3,
-        neighborhood: 1,
-        long: -76.678,
-        lat:  39.344,
-        premise: 4
-    },
-    {
-        id: 8,
-        date: 'Mon Jul 30 2018 11:29:02 GMT-0400 (Eastern Daylight Time)',
-        location: '99 FAKE ST',
-        description: 3,
-        weapon: 2,
-        district: 3,
-        neighborhood: 2,
-        long: -76.678,
-        lat:  39.344,
-        premise: 5
-    },
-    {
-        id: 9,
-        date: 'Mon Jul 10 2018 11:29:02 GMT-0400 (Eastern Daylight Time)',
-        location: '3700 W GARRISON AVE',
-        description: 3,
-        weapon: 0,
-        district: 0,
-        neighborhood: 0,
-        long: -76.678,
-        lat:  39.344,
-        premise: 0
-    },
-];
+const crimes = {};
+
 const columns = [{
     dataField: 'id',
     text: 'Crime ID'
@@ -247,8 +127,7 @@ const columns = [{
 class Table extends Component {
     render() {
         return (
-            <ToolkitProvider keyfield='id' data={ crimes } columns={ columns } 
-                exportCSV={ { onlyExportFiltered: true, exportAll: false }} columnToggle>
+            <ToolkitProvider keyfield='id' data={ crimes } columns={ columns } exportCSV={ { onlyExportFiltered: true, exportAll: false }} columnToggle>
                 {
                     props => (
                         <div>
