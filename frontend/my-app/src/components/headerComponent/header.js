@@ -1,23 +1,55 @@
 import React, {Component} from 'react';
-import { Nav, Navbar } from "react-bootstrap";
+import { NavItem, Navbar } from "react-bootstrap";
+import { LinkContainer} from "react-router-bootstrap";
+import "../../App.css"
+
+function logOut(props) {
+  props.callback({loggedIn: false});
+}
 
 class Header extends Component{
-  render(){
-    return (
 
+  constructor(props) {
+    super(props);
+    this.state = {isLoggedIn: false};
+  }
+  
+  render(){
+    this.state.isLoggedIn = this.props.userData.loggedIn
+
+    return (
       <Navbar variant="dark">
-        <Navbar.Brand href="/">Baltimore Crime Visualizer</Navbar.Brand>
+        <LinkContainer to="/">
+          <Navbar.Brand>Baltimore Crime Visualizer</Navbar.Brand>
+        </LinkContainer>
         <Navbar.Toggle />
         <Navbar.Collapse className="justify-content-end">
-         
-          <Nav>
-            <Nav.Link href="/signup">Signup</Nav.Link>
-            <Nav.Link href="/login">Login</Nav.Link>
-          </Nav>         
-    
+
+        {this.state.isLoggedIn ? (
+          <div>
+          <div id="navbar-link" style={{display:'inline-block', cursor: 'text'}}>{this.props.userData.user_name}</div>
+          <div id="navbar-link" style={{display:'inline-block'}} onClick= {logOut.bind(this,this.props)}>
+          Signout
+          </div>
+          </div>
+        ) : (
+          <div>
+          <div id="navbar-link" style={{display:'inline-block'}}>
+          <LinkContainer to="/register">
+          <NavItem>Signup</NavItem>
+          </LinkContainer>
+          </div>
+
+          <div id="navbar-link" style={{display:'inline-block'}}>
+          <LinkContainer to="/login">
+            <NavItem>Login</NavItem>
+          </LinkContainer>
+          </div> 
+          </div>
+        )}
+
         </Navbar.Collapse>
       </Navbar>
-          
     );
   }
 }

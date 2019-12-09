@@ -3,15 +3,16 @@
 
 const express = require('express');
 const mongoose = require('mongoose');
+const cors = require('cors');
 
 require('dotenv').config();
 
 const app = express();
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 3001;
 
 // middleware
-app.use(express.json());                            // parsing json module
-app.use(express.urlencoded({ extended: false }));   // parsing urlencoded module
+app.use(express.json());
+app.use(cors());
 
 // Set up db uri env var->from mongodb cluster connect
 const uri = process.env.MONGO_URI;

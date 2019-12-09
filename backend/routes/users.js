@@ -51,7 +51,9 @@ router.route('/login').get((req, res) => {
 // .post endpoint to add a new user to the database
 router.route('/register').post((req, res) => {  
   
-    const in_user = new String(req.body.user_name);
+    console.log(String(req.body.user_name)+String(req.body.password));
+
+    const in_user = String(req.body.user_name);
     const in_pass = bcrypt.hashSync(String(req.body.password), 8);
 
     // Check to see if the username already exists
@@ -77,8 +79,13 @@ router.route('/register').post((req, res) => {
                 if (err) return console.error(err);
         
                 console.log("New user ("+user._id+") added to account_info collection");
-            })
-            return res.json({ 'success': true, 'user_name': in_user });
+            });
+
+            var token = jwt.sign({id: user._id}, process.env.JWT_KEY, {
+                expiresIn: 86400 // expires in 24 hours
+            });
+
+            return res.json({ 'success': true, 'user_name': in_user, 'token': token, 'filters' : [] });
                        
         }
     });
