@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import { Button, Form, FormGroup, FormControl } from "react-bootstrap";
 import Filter from '../components/filterComponent/filter';
+import MyCarousel from '../components/carouselComponent/mycarousel.js';
 
 
 class Home extends Component {
@@ -12,8 +12,8 @@ class Home extends Component {
   render() {
   return (
       <div className="Home">
-        
-        <Filter />     
+        <MyCarousel />
+        <Filter />   
       </div>
       
     );

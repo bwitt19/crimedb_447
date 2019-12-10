@@ -19,6 +19,40 @@
 
 
 
+/* Homepage CSS */
+.filters {
+  display: inline-block;
+  background: yellow;
+  border: 1px solid black;
+}
+
+.my-carousel {
+  display: block;
+  float: left;
+  width: 1200px;
+  height: 800px;
+  background: orange;
+  margin-left: 10px;
+}
+
+.carousel {
+  display:block;
+  height: 100%;
+  
+}
+
+.carousel-slide {
+  display:block;
+  height: 100%;
+  background:blue;
+}
+
+.date-selector {
+  color: white;
+}
+
+
+
 /* Login Page CSS */
 .login {
   position: relative;
