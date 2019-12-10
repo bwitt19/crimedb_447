@@ -12,8 +12,6 @@ router.route('/login').get((req, res) => {
     var in_user = String(req.query.user_name);
     var in_pass = String(req.query.password);
 
-    console.log(req.query);
-
     // Check to see if we can find an account with a matching username and password
     User.findOne({ 'user_name': in_user}) 
     .then(userCheck => {
@@ -52,8 +50,6 @@ router.route('/login').get((req, res) => {
 
 // .post endpoint to add a new user to the database
 router.route('/register').post((req, res) => {  
-  
-    console.log(String(req.body.user_name)+String(req.body.password));
 
     const in_user = String(req.body.user_name);
     const in_pass = bcrypt.hashSync(String(req.body.password), 8);

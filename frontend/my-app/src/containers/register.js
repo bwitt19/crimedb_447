@@ -47,7 +47,7 @@ class Register extends Component{
               });
   
               // Jump back to homepage
-              this.props.history.push("/home");  
+              this.props.history.push("/");  
             }
   
             // If error during new user creation

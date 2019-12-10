@@ -28,8 +28,6 @@ class Login extends Component{
 
           // If new user was created
           if (result.success) {
-            
-            alert(result.filters);
 
             // Update components
             this.setState({displayEmsg:false, loggedIn:true});
@@ -44,7 +42,7 @@ class Login extends Component{
             });
 
             // Jump back to homepage
-            this.props.history.push("/home");  
+            this.props.history.push("/");  
           }
 
           // If error during new user creation
