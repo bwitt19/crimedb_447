@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import Accordion from 'react-bootstrap/Accordion';
-import Card from 'react-bootstrap/Card';
+//import Accordion from 'react-bootstrap/Accordion';
+//import Card from 'react-bootstrap/Card';
 import Table from './tableComponent/table';
 import { Button, Form, FormGroup, FormControl } from "react-bootstrap";
 import moment from "moment";
@@ -10,7 +10,7 @@ class Filter extends Component {
 
     constructor(props) {
         super(props);
-        this.state = { lowerDate: null, upperDate: null, address: "", neighborhood: "", crimeType: "", weapon: "", district: "", data = [] }
+        this.state = { lowerDate: null, upperDate: null, address: "", neighborhood: "", crimeType: "", weapon: "", district: "", data: [] }
         this.address = React.createRef();
         this.neighborhood = React.createRef();
         this.crimeType = React.createRef();
