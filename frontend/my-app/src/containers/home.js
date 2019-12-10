@@ -11,6 +11,7 @@ class Home extends Component {
   }
 
   fromChild(params) {
+    alert(params.data[0].premise)
     this.setState({data: params.data});
   }
 

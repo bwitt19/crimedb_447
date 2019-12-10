@@ -3,6 +3,10 @@ import Carousel from 'react-bootstrap/Carousel';
 
 class myCarousel extends Component {
 
+  constructor(props){
+    super(props);
+  }
+
     render() {
         return (
           <div class="my-carousel">
@@ -17,6 +21,8 @@ class myCarousel extends Component {
                 <div class="carousel-slide" style={{background:'red'}}></div>                 
               </Carousel.Item>
             </Carousel>
+
+            {JSON.stringify(this.props.data, null, 2) } 
           </div>
         );
 
