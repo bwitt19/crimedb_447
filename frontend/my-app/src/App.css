@@ -1,18 +1,147 @@
-Header {
+
+
+
+/* Navbar CSS */
+.navbar {
   position: relative;
   display: block;
   background-color: #282c34;
   height: 50px;
   width: 100%;
   color: white;
+  
+}
+.navbar #navbar-link {
+  position: relative;
+  margin-left: 25px;
+  cursor: pointer;
 }
 
-logo{
-  position: absolute;
-  top: 30%; left: 15px;
+
+
+/* Login Page CSS */
+.login {
+  position: relative;
+  top:200px;
+  display: block;
+  margin: 0 auto;
+  padding:50px;
+  text-align: left;
+  width: 450px;
+  border: 2px solid black;
+  box-shadow: 5px 8px; 
 }
 
-username{
-  position: absolute;
-  top: 30%; right: 15px;
+.login #login-text {
+  font-size: 50px;
+  text-align: center;
 }
+
+.login #login-forms {
+  padding-top: 25px;
+}
+
+.login #login-signup-tag {
+  color:black;
+  text-align: center;
+}
+
+.login #login-signup-tag-link {
+  display: inline;
+  padding-left: 5px;
+  color: blue;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.login #login-button {
+  position: relative;
+  top: 15px;
+  width: 100%;
+  height: 40px;
+  background-color: #282c34;
+  border-color: black; 
+}
+
+.login #login-button:hover {
+  position: relative;
+  top: 15px;
+  width: 100%;
+  height: 40px;
+  background-color: #475064;
+  border-color: black; 
+}
+
+.login #login-button-disabled {
+  position: relative;
+  top: 15px;
+  width: 100%;
+  height: 40px;
+  background-color: #282c34;
+  border-color: black; 
+}
+
+.login #login-emsg {
+  color: red;
+  text-decoration: underline;
+}
+
+
+
+/* Login Page CSS */
+.register {
+  position: relative;
+  top:200px;
+  display: block;
+  margin: 0 auto;
+  padding:50px;
+  text-align: left;
+  width: 450px;
+  border: 2px solid black;
+  box-shadow: 5px 8px; 
+}
+
+.register #register-text {
+  font-size: 50px;
+  text-align: center;
+}
+
+.register #register-forms {
+  padding-top: 25px;
+}
+
+.register #register-button {
+  position: relative;
+  top: 15px;
+  width: 100%;
+  height: 40px;
+  background-color: #282c34;
+  border-color: black; 
+}
+
+.register #register-button:hover {
+  position: relative;
+  top: 15px;
+  width: 100%;
+  height: 40px;
+  background-color: #475064;
+  border-color: black; 
+}
+
+.register #register-button-disabled {
+  position: relative;
+  top: 15px;
+  width: 100%;
+  height: 40px;
+  background-color: #282c34;
+  border-color: black; 
+}
+
+.register #register-emsg {
+  color: red;
+  text-decoration: underline;
+}
+
+
+
+

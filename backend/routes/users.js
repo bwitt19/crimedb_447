@@ -9,8 +9,8 @@ const Filter = require('../models/filter.model');
 // .get endpoint checking to see if an account exists for user log in 
 router.route('/login').get((req, res) => {
     
-    var in_user = new String(req.body.user_name);
-    var in_pass = String(req.body.password);
+    var in_user = String(req.query.user_name);
+    var in_pass = String(req.query.password);
 
     // Check to see if we can find an account with a matching username and password
     User.findOne({ 'user_name': in_user}) 
@@ -40,7 +40,7 @@ router.route('/login').get((req, res) => {
                 expiresIn: 86400 // expires in 24 hours
             })
 
-            return res.json({ 'success': true, 'token': token, 'user_filters': retArray });
+            return res.json({ 'success': true, 'token': token, 'filters': retArray , 'user_name': in_user});
 
         });
     
@@ -50,8 +50,8 @@ router.route('/login').get((req, res) => {
 
 // .post endpoint to add a new user to the database
 router.route('/register').post((req, res) => {  
-  
-    const in_user = new String(req.body.user_name);
+
+    const in_user = String(req.body.user_name);
     const in_pass = bcrypt.hashSync(String(req.body.password), 8);
 
     // Check to see if the username already exists
@@ -77,8 +77,13 @@ router.route('/register').post((req, res) => {
                 if (err) return console.error(err);
         
                 console.log("New user ("+user._id+") added to account_info collection");
-            })
-            return res.json({ 'success': true, 'user_name': in_user });
+            });
+
+            var token = jwt.sign({id: user._id}, process.env.JWT_KEY, {
+                expiresIn: 86400 // expires in 24 hours
+            });
+
+            return res.json({ 'success': true, 'user_name': in_user, 'token': token, 'filters' : [] });
                        
         }
     });
