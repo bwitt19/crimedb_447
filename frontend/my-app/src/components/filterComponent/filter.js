@@ -20,7 +20,7 @@ class Filter extends Component {
 
     // Make the https request to get the crime data
     getFilteredData() {
-        var queryStr = "http://localhost:3001/crimes/filter?";
+        var queryStr = "http://54.81.156.189:3001/crimes/filter?";
 
         // Add the filters to the query
         if (this.state.address != "") queryStr += "address=" + this.state.address.toUpperCase() + "&";

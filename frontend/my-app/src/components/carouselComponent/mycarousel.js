@@ -22,7 +22,7 @@ class myCarousel extends Component {
               </Carousel.Item>
             </Carousel>
 
-            {JSON.stringify(this.props.data, null, 2) } 
+	    {JSON.stringify(this.props.data, null, 2) } 
           </div>
         );
 
