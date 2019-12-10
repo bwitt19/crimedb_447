@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-//import Accordion from 'react-bootstrap/Accordion';
-//import Card from 'react-bootstrap/Card';
+import Accordion from 'react-bootstrap/Accordion';
+import Card from 'react-bootstrap/Card';
 import Table from './tableComponent/table';
 import { Button, Form, FormGroup, FormControl } from "react-bootstrap";
 import moment from "moment";
@@ -41,12 +41,11 @@ class Filter extends Component {
         }).then(res => res.json())
             .then(
                 (result) => {
-
                     // If new user was created
                     if (result.success) {
-                        //alert(result.count);
+
                         this.setState({data: result.crimes}) ; 
-                        
+                        this.props.callback({data: result.crimes});
                     }
 
                     // If error during new user creation
