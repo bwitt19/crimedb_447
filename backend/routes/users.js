@@ -9,8 +9,10 @@ const Filter = require('../models/filter.model');
 // .get endpoint checking to see if an account exists for user log in 
 router.route('/login').get((req, res) => {
     
-    var in_user = new String(req.body.user_name);
-    var in_pass = String(req.body.password);
+    var in_user = String(req.query.user_name);
+    var in_pass = String(req.query.password);
+
+    console.log(req.query);
 
     // Check to see if we can find an account with a matching username and password
     User.findOne({ 'user_name': in_user}) 
@@ -40,7 +42,7 @@ router.route('/login').get((req, res) => {
                 expiresIn: 86400 // expires in 24 hours
             })
 
-            return res.json({ 'success': true, 'token': token, 'user_filters': retArray });
+            return res.json({ 'success': true, 'token': token, 'filters': retArray , 'user_name': in_user});
 
         });
     

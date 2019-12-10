@@ -72,6 +72,20 @@
   border-color: black; 
 }
 
+.login #login-button-disabled {
+  position: relative;
+  top: 15px;
+  width: 100%;
+  height: 40px;
+  background-color: #282c34;
+  border-color: black; 
+}
+
+.login #login-emsg {
+  color: red;
+  text-decoration: underline;
+}
+
 
 
 /* Login Page CSS */
@@ -126,7 +140,6 @@
 .register #register-emsg {
   color: red;
   text-decoration: underline;
-  
 }
 
 

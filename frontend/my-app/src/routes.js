@@ -32,14 +32,6 @@ class Routes extends Component {
       user_name : params.user_name
 
     });
-
-    // alert(this.state.jwt);
-    // alert(this.state.filters);
-    // alert(this.state.loggedIn);
-    // alert(this.state.userName);
-
-    //let history = useHistory();
-    //this.props.history.push("/");
   }
 
   render(){

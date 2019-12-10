@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Button, Form, FormGroup, FormControl } from "react-bootstrap";
 import Filter from '../components/filterComponent/filter';
 
 
@@ -11,8 +12,9 @@ class Home extends Component {
   render() {
   return (
       <div className="Home">
-        <Filter />
+        <Filter />     
       </div>
+      
     );
   }
 }

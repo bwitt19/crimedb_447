@@ -36,7 +36,7 @@ class Header extends Component{
           <div>
           <div id="navbar-link" style={{display:'inline-block'}}>
           <LinkContainer to="/register">
-          <NavItem>Signup</NavItem>
+          <NavItem>Register</NavItem>
           </LinkContainer>
           </div>
 

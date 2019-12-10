@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import { Button, Form, FormGroup, FormControl } from "react-bootstrap";
-import {Link } from "react-router-dom";
+import { Link, withRouter } from "react-router-dom";
 import "../App.css";
 
 
@@ -11,18 +11,13 @@ class Login extends Component{
     this.loginRequest = this.loginRequest.bind(this);
     this.username = React.createRef();
     this.password = React.createRef();
+    this.state = {displayEmsg: false, loggedIn:false};
   }
 
   loginRequest() {
 
-    //alert(this.username.current.value);
-
-    fetch("http://localhost:3001/users/register", {
-      method: 'POST',
-      body: JSON.stringify({
-        user_name: this.username.current.value, 
-        password: this.password.current.value
-      }),
+    fetch("http://localhost:3001/users/login?user_name="+this.username.current.value+"&password="+this.password.current.value, {
+      method: 'GET',
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json'
@@ -30,9 +25,32 @@ class Login extends Component{
     }).then(res => res.json())
     .then(
         (result) => {
-          alert(result.success);
+
+          // If new user was created
           if (result.success) {
             
+            alert(result.filters);
+
+            // Update components
+            this.setState({displayEmsg:false, loggedIn:true});
+
+            // Pass user info back to parent components
+            this.props.callback({
+              jwt : result.token,
+              filters : result.filters,
+              loggedIn : true,
+              user_name : result.user_name
+
+            });
+
+            // Jump back to homepage
+            this.props.history.push("/home");  
+          }
+
+          // If error during new user creation
+          else {
+            // Update components to display error msg
+            this.setState({displayEmsg:true, loggedIn:false});      
           }
         }
                
@@ -67,9 +85,22 @@ class Login extends Component{
           </Form.Group>
 
         </Form>
-        <Button id="login-button" onClick={this.loginRequest}>
-          Login
-        </Button>
+
+        {/* Error message. Only displays if user enters username already tied to account */}
+        {this.state.displayEmsg ? (<div id="login-emsg">Invalid Username or Password.</div>) : (<div></div>)}
+
+
+        {/* If user is logged in disable them from signing up */}
+        {this.state.loggedIn ? (
+          <Button id="login-button-disabled" disabled>
+            Already Logged In
+          </Button>
+        ) : (
+           <Button id="login-button" onClick={this.loginRequest}>
+           Login
+           </Button>
+          
+        )}
 
         
       </div>
@@ -79,5 +110,5 @@ class Login extends Component{
   }
 }
 
-export default Login;
+export default withRouter(Login);
 
