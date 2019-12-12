@@ -7,7 +7,7 @@ const filterSchema = new Schema({
     filter_name: {type:String, required: true},
     lower_date: {type: Date, required: false, default: Date(1970,1,1)},
     upper_date: {type: Date, required: false, default: Date(1970,1,1)},
-    description: {type: String, required: false, default: "ALL"},
+    type: {type: String, required: false, default: "ALL"},
     weapon: {type: String, required: false, default: "ALL"},
     district: {type: String, required: false, default: "ALL"},
     neighborhood: {type: String, required: false, default: "ALL"},

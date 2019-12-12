@@ -16,7 +16,7 @@ class Login extends Component{
 
   loginRequest() {
 
-    fetch("http://54.81.156.189:3001/users/login?user_name="+this.username.current.value+"&password="+this.password.current.value, {
+    fetch("http://localhost:3001/users/login?user_name="+this.username.current.value+"&password="+this.password.current.value, {
       method: 'GET',
       headers: {
         'Accept': 'application/json',

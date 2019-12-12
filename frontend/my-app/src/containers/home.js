@@ -7,19 +7,25 @@ class Home extends Component {
   
   constructor(props){
     super(props);
-    this.state = {data: []};
+    this.state = {
+      data: [],
+      jwt : this.props.userData.jwt,
+      filters : this.props.userData.filters,
+      loggedIn : this.props.userData.loggedIn,
+      user_name : this.props.userData.user_name
+    };
   }
 
   fromChild(params) {
-    alert(params.data[0].premise)
     this.setState({data: params.data});
   }
 
   render() {
+
   return (
-      <div className="Home">
+      <div class="home">
         <MyCarousel data={this.state.data}/>
-        <Filter callback={this.fromChild.bind(this)} /> 
+        <Filter userData={this.props.userData} callback={this.fromChild.bind(this)} /> 
       </div>
       
     );
