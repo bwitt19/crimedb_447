@@ -120,6 +120,29 @@ class Filter extends Component {
 
     loadFilter() {
 
+        // Loop to find the correct filter
+        for(var x = 0; x < this.props.userData.filters.length; x++) {
+            if (this.props.userData.filters[x].filter_name == this.loadingFilterName.current.value) {
+                
+                // Update forms in the UI then get the filtered Data
+                this.neighborhood.current.value = this.props.userData.filters[x].neighborhood;
+                this.type.current.value = this.props.userData.filters[x].type;
+                this.weapon.current.value = this.props.userData.filters[x].weapon;
+                this.district.current.value = this.props.userData.filters[x].district;
+                this.premise.current.value = this.props.userData.filters[x].premise;
+
+                this.setState({
+                    neighborhood: this.props.userData.filters[x].neighborhood,
+                    type: this.props.userData.filters[x].type,
+                    weapon: this.props.userData.filters[x].weapon,
+                    district: this.props.userData.filters[x].district,
+                    premise: this.props.userData.filters[x].premise
+                }, () => {this.getFilteredData();})
+                
+                
+            }
+        }
+        
     }
 
 
@@ -156,58 +179,58 @@ class Filter extends Component {
                             <Form.Label>Crime Type</Form.Label>
                             <Form.Control as="select" onChange={this.ontypeChange.bind(this)} ref={this.type} value={this.value}>
                                 <option></option>
-                                <option>Agg. Assault</option>
-                                <option>Arson</option>
-                                <option>Auto Theft</option>
-                                <option>Burglary</option>
-                                <option>Common Assault</option>
-                                <option>Homicide</option>
-                                <option>Larceny</option>
-                                <option>Larceny From Auto</option>
-                                <option>Rape</option>
-                                <option>Shooting</option>
+                                <option>AGG. ASSAULT</option>
+                                <option>ARSON</option>
+                                <option>AUTO THEFT</option>
+                                <option>BURGLARY</option>
+                                <option>COMMON ASSAULT</option>
+                                <option>HOMICIDE</option>
+                                <option>LARCENRY</option>
+                                <option>LARCENRY FROM AUTO</option>
+                                <option>RAPE</option>
+                                <option>SHOOTING</option>
                             </Form.Control>
                         </Form.Group>
                         <Form.Group controlId="formGridWeapon">
                             <Form.Label>Weapon</Form.Label>
                             <Form.Control as="select" onChange={this.onWeaponChange.bind(this)} ref={this.weapon} value={this.state.weapon}>
                                 <option></option>
-                                <option>Fire</option>
-                                <option>Firearm</option>
-                                <option>Hands</option>
-                                <option>Knife</option>
+                                <option>FIRE</option>
+                                <option>FIREARM</option>
+                                <option>HANDS</option>
+                                <option>KNIFE</option>
                                 <option>NA</option>
-                                <option>Other</option>
+                                <option>OTHER</option>
                             </Form.Control>
                         </Form.Group>
                         <Form.Group controlId="formGridDistrict">
                             <Form.Label>District</Form.Label>
                             <Form.Control as="select" onChange={this.onDistrictChange.bind(this)} ref={this.district} value={this.state.district}>
                                 <option></option>
-                                <option>Central</option>
-                                <option>Eastern</option>
-                                <option>Northern</option>
-                                <option>Northeast</option>
-                                <option>Northwest</option>
-                                <option>Southern</option>
-                                <option>Southeast</option>
-                                <option>Southwest</option>
-                                <option>Western</option>
+                                <option>CENTRAL</option>
+                                <option>EASTERN</option>
+                                <option>NORTHERN</option>
+                                <option>NORTHEAST</option>
+                                <option>NORTHWEST</option>
+                                <option>SOUTHERN</option>
+                                <option>SOUTHEAST</option>
+                                <option>SOUTHWEST</option>
+                                <option>WESTERN</option>
                             </Form.Control>
                         </Form.Group>
                         <Form.Group controlId="formGridPremise">
                             <Form.Label>Premise</Form.Label>
                             <Form.Control as="select" onChange={this.onPremiseChange.bind(this)} ref={this.premise} value={this.state.premise}>
                                 <option></option>
-                                <option>APT/Condo - Occupied</option>
-                                <option>Convinience Store</option>
-                                <option>Other - Inside</option>
-                                <option>Other - Outside</option>
-                                <option>Parking Lot-Outside</option>
-                                <option>Retail/Small Busines</option>
-                                <option>Row/Townhouse-OCC</option>
-                                <option>School</option>
-                                <option>Street</option>
+                                <option>APT/CONDO - OCCUPIED</option>
+                                <option>CONVENIENCE STORE</option>
+                                <option>OTHER - INSIDE</option>
+                                <option>OTHER - OUTSIDE</option>
+                                <option>PARKING LOT-OUTSIDE</option>
+                                <option>RETAIL/SMALL BUSINES</option>
+                                <option>ROW/TOWNHOUSE-OCC</option>
+                                <option>SCHOOL</option>
+                                <option>STREET</option>
                             </Form.Control>
                         </Form.Group>
                     </Form>
