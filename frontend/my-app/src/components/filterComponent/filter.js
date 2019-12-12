@@ -6,7 +6,7 @@ class Filter extends Component {
 
     constructor(props) {
         super(props);
-        this.state = { lowerDate: null, upperDate: null, address: "", neighborhood: "", type: "", weapon: "", district: "", premise: "", data: [], isLoggedIn: false, filters: [] }
+        this.state = { lower_date: null, upper_date: null, address: "", neighborhood: "", type: "", weapon: "", district: "", premise: "", data: [], isLoggedIn: false, filters: [] }
         this.neighborhood = React.createRef();
         this.type = React.createRef();
         this.weapon = React.createRef();
@@ -26,6 +26,8 @@ class Filter extends Component {
         if (this.state.weapon != "") queryStr += "weapon=" + this.state.weapon.toUpperCase() + "&";
         if (this.state.district != "") queryStr += "district=" + this.state.district.toUpperCase() + "&";
         if (this.state.premise != "") queryStr += "premise=" + this.state.premise.toUpperCase() + "&";
+        if (this.state.lower_date != null) queryStr += "lower_date=" + String(this.state.lower_date) + "&";
+        if (this.state.upper_date != null) queryStr += "upper_date=" + String(this.state.upper_date) + "&";
 
 
         queryStr += "limit=500";
@@ -51,8 +53,8 @@ class Filter extends Component {
     }
 
     // Upon any change, update values for HTTP request and call GET to get the filtered crimes
-    onLowerDateChange(value) { this.setState({ lowerDate: value }); this.getFilteredData() }
-    onUpperDateChange(value) { this.setState({ upperDate: value }); this.getFilteredData() }
+    onLowerDateChange(value) { this.setState({ lower_date: value }); this.getFilteredData() }
+    onUpperDateChange(value) { this.setState({ upper_date: value }); this.getFilteredData() }
     onNeighborhoodChange() { this.setState({ neighborhood: String(this.neighborhood.current.value) }, () => { this.getFilteredData() }) }
     ontypeChange() { this.setState({ type: String(this.type.current.value) }, () => { this.getFilteredData() }) }
     onWeaponChange() { this.setState({ weapon: String(this.weapon.current.value) }, () => { this.getFilteredData() }) }
@@ -61,20 +63,14 @@ class Filter extends Component {
 
     saveFilter() {
 
-        // If updating filter
-        if(this.filterName.current.value == this.loadingFilterName.current.value || this.filterName.current.value == "" && this.loadingFilterName.current.value != "") {
-            
-            
-        }
-
         // If adding new filter
-        else if (this.filterName.current.value != "" && this.loadingFilterName.current.value == "") {
+        if (this.filterName.current.value != "" && this.loadingFilterName.current.value == "") {
 
             // Add the filter to our filters
             this.props.userData.filters.push({
                 filter_name: this.filterName.current.value, 
-                lowerDate: this.state.lowerDate,
-                upperDate: this.state.upperDate,
+                lower_date: this.state.lower_date,
+                upper_date: this.state.upper_date,
                 neighborhood: this.state.neighborhood,
                 type: this.state.type,
                 weapon: this.state.weapon,
@@ -93,8 +89,8 @@ class Filter extends Component {
                     "user_name": this.props.userData.user_name,
                     "token": this.props.userData.jwt,
                     "filter_name": this.filterName.current.value, 
-                    "lower_date": this.state.lowerDate == null ? "" : this.state.lowerDate,
-                    "upper_date": this.state.upperDate == null ? "" : this.state.upperDate,
+                    "lower_date": this.state.lower_date == null ? "" : this.state.lower_date,
+                    "upper_date": this.state.upper_date == null ? "" : this.state.upper_date,
                     "neighborhood": this.state.neighborhood.toUpperCase(),
                     "type": this.state.type.toUpperCase(),
                     "weapon": this.state.weapon.toUpperCase(),
@@ -111,8 +107,61 @@ class Filter extends Component {
 
             // Update forms
             this.filterName.current.value = "";
-            this.loadingFilterName.current.value = "hello";
             this.forceUpdate();
+            
+        }
+
+        // If updating a filter
+        else {
+
+            // Loop through the filters to find the one being updated
+            for(var x = 0; x < this.props.userData.filters.length; x++) {
+                if (this.props.userData.filters[x].filter_name == this.loadingFilterName.current.value) {
+                    
+                    // Update forms in the UI then get the filtered Data
+                    this.props.userData.filters[x].neighborhood = this.neighborhood.current.value;
+                    this.props.userData.filters[x].type = this.type.current.value;
+                    this.props.userData.filters[x].weapon = this.weapon.current.value;
+                    this.props.userData.filters[x].district = this.district.current.value;
+                    this.props.userData.filters[x].premise = this.premise.current.value;
+                    this.props.userData.filters[x].lower_date = this.state.lower_date;
+                    this.props.userData.filters[x].upper_date = this.state.upper_date;
+
+                    // Call HTTP request to update the new filter in D
+                    fetch("http://localhost:3001/filter/user_filter", {
+                        method: 'PUT',
+                        headers: {
+                            'Accept': 'application/json',
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            "user_name": this.props.userData.user_name,
+                            "token": this.props.userData.jwt,
+                            "filter_name": this.loadingFilterName.current.value, 
+                            "new_filter_name": (this.filterName.current.value.length == 0) ? this.loadingFilterName.current.value : this.filterName.current.value, 
+                            "lower_date": this.state.lower_date == null ? "" : this.state.lower_date,
+                            "upper_date": this.state.upper_date == null ? "" : this.state.upper_date,
+                            "neighborhood": this.state.neighborhood.toUpperCase(),
+                            "type": this.state.type.toUpperCase(),
+                            "weapon": this.state.weapon.toUpperCase(),
+                            "district": this.state.district.toUpperCase(),
+                            "premise": this.state.premise.toUpperCase(),
+                        })
+                    }).then(res => res.json())
+                        .then(
+                        (result) => {
+                                // If filter was saved
+                                if (result) {
+                                    // Update forms
+                                    this.filterName.current.value = "";
+                                    this.forceUpdate();
+                                }
+                            }    
+                        )
+                        this.props.userData.filters[x].filter_name = (this.filterName.current.value.length == 0) ? this.loadingFilterName.current.value : this.filterName.current.value;
+                    
+                }
+            }
             
         }
         
@@ -132,14 +181,15 @@ class Filter extends Component {
                 this.premise.current.value = this.props.userData.filters[x].premise;
 
                 this.setState({
+                    lower_date: (String(this.props.userData.filters[x].lower_date) == "1970-01-01T00:00:00.000Z") ? null : this.props.userData.filters[x].lower_date,
+                    upper_date: (String(this.props.userData.filters[x].upper_date) == "1970-01-01T00:00:00.000Z") ? null : this.props.userData.filters[x].upper_date,
                     neighborhood: this.props.userData.filters[x].neighborhood,
                     type: this.props.userData.filters[x].type,
                     weapon: this.props.userData.filters[x].weapon,
                     district: this.props.userData.filters[x].district,
                     premise: this.props.userData.filters[x].premise
                 }, () => {this.getFilteredData();})
-                
-                
+                       
             }
         }
         
@@ -147,7 +197,7 @@ class Filter extends Component {
 
 
     render() {
-        this.state.isLoggedIn = this.props.userData.loggedIn
+        this.state.isLoggedIn = this.props.userData.loggedIn;
 
         return (
             <div>
@@ -159,13 +209,13 @@ class Filter extends Component {
                             <div class="date-picker" style={{ display: 'inline-block' }}>
                                 <Form.Group controlId="formGroupLowerDate">
                                     <Form.Label>Lower Date: </Form.Label> <tab></tab>
-                                    <DatePicker onChange={this.onLowerDateChange.bind(this)} value={this.state.lowerDate} disableCalendar={true} />
+                                    <DatePicker onChange={this.onLowerDateChange.bind(this)} value={this.state.lower_date} disableCalendar={true} />
                                 </Form.Group>
                             </div>
                             <div class="date-picker" style={{ display: 'inline-block' }}>
                                 <Form.Group controlId="formGroupUpperDate">
                                     <Form.Label>Upper Date: </Form.Label> <tab></tab>
-                                    <DatePicker onChange={this.onUpperDateChange.bind(this)} value={this.state.upperDate} disableCalendar={true} />
+                                    <DatePicker onChange={this.onUpperDateChange.bind(this)} value={this.state.upper_date} disableCalendar={true} />
                                 </Form.Group>
                             </div>
                         </Form.Row>
@@ -177,7 +227,7 @@ class Filter extends Component {
 
                         <Form.Group controlId="formGridDescription">
                             <Form.Label>Crime Type</Form.Label>
-                            <Form.Control as="select" onChange={this.ontypeChange.bind(this)} ref={this.type} value={this.value}>
+                            <Form.Control as="select" onChange={this.ontypeChange.bind(this)} ref={this.type} value={this.state.type}>
                                 <option></option>
                                 <option>AGG. ASSAULT</option>
                                 <option>ARSON</option>
@@ -249,9 +299,16 @@ class Filter extends Component {
                                         <Form.Control type="filterName" ref={this.filterName} placeholder="Enter Filter Name" />
                                     </Form.Group>
 
+                                    { false ? (
+
                                     <Button id="user-filters-button" onClick={this.saveFilter.bind(this)}>
-                                        Save Filter
+                                        Create Filter
                                     </Button>
+                                    ):(
+                                        <Button id="user-filters-button" onClick={this.saveFilter.bind(this)}>
+                                        Update Filter
+                                    </Button>
+                                    )}
                                 </Form.Row>
 
                                 <Form.Group controlId="formGridUsersFilters">
@@ -274,7 +331,7 @@ class Filter extends Component {
                                     </Form.Group>
 
                                     <Button id="user-filters-button-disabled" onClick={this.saveFilter.bind(this)} disabled>
-                                        Save Filter
+                                        Create Filter
                                     </Button>
                                 </Form.Row>
 
