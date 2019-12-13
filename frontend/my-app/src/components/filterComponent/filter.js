@@ -62,7 +62,7 @@ class Filter extends Component {
     onPremiseChange() { this.setState({ premise: String(this.premise.current.value) }, () => { this.getFilteredData() }) }
 
     saveFilter() {
-
+	
         // If adding new filter
         if (this.filterName.current.value != "" && this.loadingFilterName.current.value == "") {
 
