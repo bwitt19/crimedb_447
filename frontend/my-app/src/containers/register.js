@@ -17,7 +17,7 @@ class Register extends Component{
   RegisterRequest(username, password) {
 
     // Post HTTP request to create a new account
-    fetch("http://localhost:3001/users/register", {
+    fetch("http://54.81.156.189:3001/users/register", {
         method: 'POST',
         body: JSON.stringify({
           user_name: username.current.value, 

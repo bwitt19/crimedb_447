@@ -10,10 +10,10 @@ class Routes extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      jwt : "",
-      filters : [],
-      loggedIn :false,
-      user_name : ""
+      jwt : this.props.userData.jwt,
+      filters : this.props.userData.filters,
+      loggedIn : this.props.userData.loggedIn,
+      user_name : this.props.userData.user_name
     }
   }
 
@@ -23,7 +23,7 @@ class Routes extends Component {
       filters : params.filters,
       loggedIn :params.loggedIn,
       user_name : params.user_name
-    })
+    });
 
     this.props.callback({
       jwt : params.jwt,
@@ -35,6 +35,7 @@ class Routes extends Component {
   }
 
   render(){
+    // alert(this.state.loggedIn)
   return (
     <Switch>
       <Route path="/login">
@@ -44,7 +45,7 @@ class Routes extends Component {
         <Register callback={this.fromChild.bind(this)}/>
       </Route>
       <Route path="/">
-        <Home userData = {this.state} />
+        <Home userData = {this.props.userData} />
       </Route>
     </Switch>
   );

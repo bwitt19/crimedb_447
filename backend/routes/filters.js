@@ -31,6 +31,7 @@ router.route('/user_filter').post((req, res) => {
             // If the filter name is not in use, create the filter
             else {
                         
+                console.log(String(req.body.type));
                 // Create the new filter Schema doing input validation on each input
                 var filter = new Filter({
                     _id: mongoose.Types.ObjectId(),
@@ -38,11 +39,11 @@ router.route('/user_filter').post((req, res) => {
                     filter_name: in_filter_name,
                     lower_date: (String(req.body.lower_date).length != 0 ? String(req.body.lower_date) : "1970-01-01T00:00:00Z"),
                     upper_date: (String(req.body.upper_date).length != 0 ? String(req.body.upper_date) : "1970-01-01T00:00:00Z"),
-                    description: (String(req.body.description).length != 0 ? String(req.body.description) : "ALL"),
-                    weapon: (String(req.body.weapon).length != 0 ? String(req.body.weapon) : "ALL"),
-                    district: (String(req.body.district).length != 0 ? String(req.body.district) : "ALL"),
-                    neighborhood: (String(req.body.neighborhood).length != 0 ? String(req.body.neighborhood) : "ALL"),
-                    premise: (String(req.body.premise).length != 0 ? String(req.body.premise) : "ALL")                      
+                    type: (String(req.body.type).length != 0 ? String(req.body.type) : ""),
+                    weapon: (String(req.body.weapon).length != 0 ? String(req.body.weapon) : ""),
+                    district: (String(req.body.district).length != 0 ? String(req.body.district) : ""),
+                    neighborhood: (String(req.body.neighborhood).length != 0 ? String(req.body.neighborhood) : ""),
+                    premise: (String(req.body.premise).length != 0 ? String(req.body.premise) : "")                      
                 })            
             
                 // Save it to the database
@@ -75,11 +76,11 @@ router.route('/user_filter').put((req, res) => {
                         filter_name: String(req.body.new_filter_name).length != 0 ? String(req.body.new_filter_name) : in_old_filter_name,
                         lower_date: (String(req.body.lower_date).length != 0 ? String(req.body.lower_date) : "1970-01-01T00:00:00Z"),
                         upper_date: (String(req.body.upper_date).length != 0 ? String(req.body.lower_date) : "1970-01-01T00:00:00Z"),
-                        description: (String(req.body.description).length != 0 ? String(req.body.description) : "ALL"),
-                        weapon: (String(req.body.weapon).length != 0 ? String(req.body.weapon) : "ALL"),
-                        district: (String(req.body.district).length != 0 ? String(req.body.district) : "ALL"),
-                        neighborhood: (String(req.body.neighborhood).length != 0 ? String(req.body.neighborhood) : "ALL"),
-                        premise: (String(req.body.premise).length != 0 ? String(req.body.premise) : "ALL")
+                        type: (String(req.body.type).length != 0 ? String(req.body.type) : ""),
+                        weapon: (String(req.body.weapon).length != 0 ? String(req.body.weapon) : ""),
+                        district: (String(req.body.district).length != 0 ? String(req.body.district) : ""),
+                        neighborhood: (String(req.body.neighborhood).length != 0 ? String(req.body.neighborhood) : ""),
+                        premise: (String(req.body.premise).length != 0 ? String(req.body.premise) : "")
                       };
 
     // Make sure the supplied user is authenticated

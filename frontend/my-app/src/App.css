@@ -1,4 +1,11 @@
 
+/* App CSS */
+.fullapp {
+  position: relative;
+  height: 100vh;
+}
+
+
 
 
 /* Navbar CSS */
@@ -15,6 +22,113 @@
   position: relative;
   margin-left: 25px;
   cursor: pointer;
+}
+
+
+
+/* Homepage CSS */
+.home {
+  height: 94.5%;
+}
+
+.filters {
+  display: inline-block;
+  position: relative;
+  top: 20px;
+  width: 28%;
+  border: 2px solid black;
+  box-shadow: 5px 8px; 
+  padding-left:10px;
+  padding-right:10px;
+}
+
+.filters #filters-title {
+  text-align: center;
+  text-decoration: underline;
+  font-size: 38px;
+  margin-bottom: 20px;
+}
+
+.user-filters {
+  display: inline-block;
+  position: relative;
+  top: 40px;
+  width: 28%;
+  border: 2px solid black;
+  box-shadow: 5px 8px; 
+  padding-left:10px;
+  padding-right:10px;
+}
+
+.user-filters #user-filters-title {
+  text-align: center;
+  text-decoration: underline;
+  font-size: 38px;
+  margin-bottom: 20px;
+}
+
+.user-filters #filter-name {
+  margin-left: 10px;
+  width: 65%;
+}
+
+.user-filters #user-filters-button {
+  position: relative;
+  top: 30px;
+  display: inline-block;
+  margin-left: 30px;
+  width: 120px;
+  height: 40px;
+  background-color: #282c34;
+  border-color: black; 
+}
+
+.user-filters #user-filters-button:hover {
+  position: relative;
+  width: 120px;
+  height: 40px;
+  background-color: #475064;
+  border-color: black; 
+}
+
+.user-filters #user-filters-button-disabled {
+  position: relative;
+  top: 30px;
+  display: inline-block;
+  margin-left: 30px;
+  width: 120px;
+  height: 40px;
+  background-color: #282c34;
+  border-color: black; 
+}
+
+.my-carousel {
+  display: block;
+  float: left;
+  width: 70%;
+  height: 100%;
+  background: orange;
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
+.carousel {
+  display:block;
+  height: 100%;
+  
+}
+
+.carousel-slide {
+  display:block;
+  height: 100%;
+  background:blue;
+}
+
+.date-picker {
+  position: relative;
+  margin-left: 10px;
+  left: 45px;
+
 }
 
 

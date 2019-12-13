@@ -36,11 +36,12 @@ class App extends Component {
   }
 
   render() {
+
     return (
-      <div className="App">
+      <div class="fullapp">
         <Router>
           <Header userData = {this.state} callback={this.logOut.bind(this)}/>
-          <Routes callback={this.fromChild.bind(this)}/>
+          <Routes userData = {this.state} callback={this.fromChild.bind(this)}/>
         </Router>        
       </div>
     );
