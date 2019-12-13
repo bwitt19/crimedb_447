@@ -18,7 +18,7 @@ class Filter extends Component {
 
     // Make the https request to get the crime data
     getFilteredData() {
-        var queryStr = "http://localhost:3001/crimes/filter?";
+        var queryStr = "http://54.81.156.189:3001/crimes/filter?";
 
         // Add the filters to the query
         if (this.state.neighborhood != "") queryStr += "neighborhood=" + this.state.neighborhood.toUpperCase() + "&";
@@ -79,7 +79,7 @@ class Filter extends Component {
             });
 
             // Call HTTP request to save the new filter to DB
-            fetch("http://localhost:3001/filter/user_filter", {
+            fetch("http://54.81.156.189:3001/filter/user_filter", {
                 method: 'POST',
                 headers: {
                     'Accept': 'application/json',
@@ -128,7 +128,7 @@ class Filter extends Component {
                     this.props.userData.filters[x].upper_date = this.state.upper_date;
 
                     // Call HTTP request to update the new filter in D
-                    fetch("http://localhost:3001/filter/user_filter", {
+                    fetch("http://54.81.156.189:3001/filter/user_filter", {
                         method: 'PUT',
                         headers: {
                             'Accept': 'application/json',
