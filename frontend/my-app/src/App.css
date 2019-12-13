@@ -31,6 +31,9 @@
   height: 94.5%;
 }
 
+
+
+/* Filters CSS */
 .filters {
   display: inline-block;
   position: relative;
@@ -47,6 +50,12 @@
   text-decoration: underline;
   font-size: 38px;
   margin-bottom: 20px;
+}
+
+.date-picker {
+  position: relative;
+  margin-left: 10px;
+  left: 45px;
 }
 
 .user-filters {
@@ -102,12 +111,12 @@
   border-color: black; 
 }
 
+
+/* Carousel CSS */
 .my-carousel {
   display: block;
   float: left;
   width: 70%;
-  height: 100%;
-  background: orange;
   margin-left: 10px;
   margin-right: 10px;
 }
@@ -118,18 +127,28 @@
   
 }
 
+/* Set the color of the arrow in fill= */
+.my-carousel .carousel-control-prev-icon {
+  height: 30px;
+  width: 30px;
+  background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%23000' viewBox='0 0 8 8'%3E%3Cpath d='M5.25 0l-4 4 4 4 1.5-1.5-2.5-2.5 2.5-2.5-1.5-1.5z'/%3E%3C/svg%3E"); 
+}
+.my-carousel .carousel-control-next-icon {
+  height: 30px;
+  width: 30px;
+  background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%23000' viewBox='0 0 8 8'%3E%3Cpath d='M2.75 0l-1.5 1.5 2.5 2.5-2.5 2.5 1.5 1.5 4-4-4-4z'/%3E%3C/svg%3E");
+}
+
 .carousel-slide {
   display:block;
+  height: 880px;
+}
+
+#heatmap {
   height: 100%;
-  background:blue;
+  z-index: 12;
 }
 
-.date-picker {
-  position: relative;
-  margin-left: 10px;
-  left: 45px;
-
-}
 
 
 
