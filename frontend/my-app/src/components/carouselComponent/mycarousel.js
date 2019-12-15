@@ -25,7 +25,7 @@ class myCarousel extends Component {
       
       return (
           <div class="my-carousel">
-            <Carousel interval={false}>
+              <Carousel interval={false} touch={false}>
               <Carousel.Item>
                 <div class="carousel-slide">
 
@@ -51,7 +51,7 @@ class myCarousel extends Component {
               </Carousel.Item> 
             </Carousel>
 
-	    {JSON.stringify(this.props.data, null, 2) }  
+	  {/* {JSON.stringify(this.props.data, null, 2) }  */}
           </div>
         );
 
