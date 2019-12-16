@@ -23,10 +23,11 @@ class myCarousel extends Component {
       const bounds = Leaflet.latLngBounds(topCorner, bottomCorner)
       const addressPoints = [];
       const gradient = {0.2: 'blue', 0.3: 'cyan', 0.5:'#aeff00',0.6:'#ffbf00',0.8:'#ff8000', 0.9: '#ff4d00', 1.0: '#ff0000'};
-	
-      // Push the datapoints into the heatmap layer
-      for (var x= 0; x < this.props.data.length; x++) {
-        addressPoints.push([this.props.data[x].latitude, this.props.data[x].longitude, 0.1])
+
+	// Push the datapoints into the heatmap layer
+	for (var x= 0; x < this.props.data.length; x++) {
+	    if(!(isNaN(this.props.data[x].latitude) || isNaN(this.props.data[x].longitude != null)))
+	      addressPoints.push([Number(this.props.data[x].latitude), Number(this.props.data[x].longitude), 0.1])
       }
       
       return (
@@ -49,7 +50,7 @@ class myCarousel extends Component {
 	  max={0.5}
 	  blur={30}
 	  gradient={gradient}
-	  minOpacity={0.75}
+	  minOpacity={0.5}
 	      />
               <TileLayer attribution='&amp;copy <a href="http://osm.org/copyright">OpenStreetMap</a> contributors' url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />        
                   </Map> 
