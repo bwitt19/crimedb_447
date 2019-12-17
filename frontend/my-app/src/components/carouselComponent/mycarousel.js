@@ -7,13 +7,24 @@ import 'leaflet/dist/leaflet.css';
 
 class myCarousel extends Component {
 
-  constructor(props){
-      super(props);
-      this.state = {currSlide: 0, sliding: false};
-  }
+    constructor(props){
+        super(props);
+        this.state = {currSlide: 0, sliding: false};
+	//this.toggleDataSeries = this.toggleDataSeries.bind(this);
+    }
 
     changeSlide(newSlide) {
 	this.setState({currSlide: newSlide, sliding: true});
+    }
+
+    toggleDataSeries(e){
+      if (typeof(e.dataSeries.visible) === "undefined" || e.dataSeries.visible) {
+        e.dataSeries.visible = false;
+      }
+      else{
+        e.dataSeries.visible = true;
+      }
+      this.chart.render();
     }
 
     render() {
@@ -59,7 +70,11 @@ class myCarousel extends Component {
               </Carousel.Item>
               
                <Carousel.Item>
-                <div class="carousel-slide" style={{background:'green'}}></div>                 
+                <div class="carousel-slide">
+	  
+		
+
+		</div>                 
               </Carousel.Item>
               <Carousel.Item>
                 <div class="carousel-slide" style={{background:'red'}}></div>                 

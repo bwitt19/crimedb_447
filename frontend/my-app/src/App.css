@@ -108,7 +108,7 @@
 	position: relative;
 	top: 30px;
 	display: inline-block;
-	margin-left: 30px;
+	margin-left: 0px;
 	width: 120px;
 	height: 40px;
 	background-color: #282c34;
@@ -381,7 +381,8 @@
 	width: 80px;
 	height: 40px;
 	background-color: #282c34;
-	border-color: black; 
+	border-color: black;
+	font-size: 10px;
     }
     
     .user-filters #user-filters-button:hover {
@@ -389,7 +390,8 @@
 	width: 80px;
 	height: 40px;
 	background-color: #475064;
-	border-color: black; 
+	border-color: black;
+	font-size: 10px;
     }
     
     .user-filters #user-filters-button-disabled {
@@ -401,6 +403,7 @@
 	height: 40px;
 	background-color: #282c34;
 	border-color: black; 
+	font-size: 10px;
     }
     
     
