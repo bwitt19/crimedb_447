@@ -4,31 +4,32 @@ import { Map, TileLayer } from 'react-leaflet';
 import Leaflet from 'leaflet'
 import HeatmapLayer from 'react-leaflet-heatmap-layer';
 import 'leaflet/dist/leaflet.css';
+import BarChart from 'react-bar-chart';
 
 class myCarousel extends Component {
 
     constructor(props){
         super(props);
         this.state = {currSlide: 0, sliding: false};
-	//this.toggleDataSeries = this.toggleDataSeries.bind(this);
+	this.state.barwidth = 600;
+	this.state.barheight = 600;
     }
 
     changeSlide(newSlide) {
 	this.setState({currSlide: newSlide, sliding: true});
     }
 
-    toggleDataSeries(e){
-      if (typeof(e.dataSeries.visible) === "undefined" || e.dataSeries.visible) {
-        e.dataSeries.visible = false;
-      }
-      else{
-        e.dataSeries.visible = true;
-      }
-      this.chart.render();
+    componentDidMount = () => {
+	window.onresize = () => {
+	    this.setState({barwidth: this.refs.root.offsetWidth}); 
+	    this.setState({barheight: this.refs.root.offsetHeight}); 
+	};
     }
+
 
     render() {
 
+      // Code for rendering heatmap
       const topCorner = Leaflet.latLng(39.404897, -76.838722)
       const bottomCorner = Leaflet.latLng(39.179312, -76.389313)   
       const bounds = Leaflet.latLngBounds(topCorner, bottomCorner)
@@ -40,11 +41,41 @@ class myCarousel extends Component {
 	    if(!(isNaN(this.props.data[x].latitude) || isNaN(this.props.data[x].longitude != null)))
 	      addressPoints.push([Number(this.props.data[x].latitude), Number(this.props.data[x].longitude), 0.1])
       }
-      
+
+
+        // Code for rendering timeline chart
+	var data = [
+	    {text: 'Jan', value:0},
+	    {text: 'Feb', value:0},
+	    {text: 'Mar', value:0},
+	    {text: 'Apr', value:0},
+            {text: 'May', value:0},
+            {text: 'Jun', value:0},
+	      {text: 'Jul', value: 0}, 
+	      {text: 'Aug', value: 0},
+	      {text: 'Sep', value: 0},
+	      {text: 'Oct', value: 0},
+	      {text: 'Nov', value: 0},
+	      {text: 'Dec', value: 0},
+	];
+
+	for (var x= 0; x < this.props.data.length; x++) {
+	    if(this.props.data[x].date != null) {
+		var datDate = new Date(this.props.data[x].date);
+		//alert(datDate.getMonth() - 1);
+		if(datDate.getMonth() >= 0 && datDate.getMonth() < 13) 
+		    data[datDate.getMonth()].value += 1;
+		
+	    }
+	}
+	
+	const margin = {top: 20, right: 20, bottom: 30, left: 40};
+
       return (
           <div class="my-carousel">
               <Carousel interval={false} slide={false} touch={false} onSelect={this.changeSlide.bind(this)} >
-              <Carousel.Item>
+              
+	    <Carousel.Item>
                 <div class="carousel-slide">
 
 	  {this.state.currSlide != 0 ?
@@ -70,15 +101,18 @@ class myCarousel extends Component {
               </Carousel.Item>
               
                <Carousel.Item>
+		<div ref='root'>
                 <div class="carousel-slide">
-	  
-		
-
-		</div>                 
+		  <BarChart ylabel='Crime count'
+		    width={this.state.barwidth}
+		    height={this.state.barheight}
+		    margin={margin}
+		    data={data}
+		    >
+		  </BarChart>
+		</div>
+		</div>
               </Carousel.Item>
-              <Carousel.Item>
-                <div class="carousel-slide" style={{background:'red'}}></div>                 
-              </Carousel.Item> 
             </Carousel>
 
 	  {/* {JSON.stringify(this.props.data, null, 2) }  */}

@@ -30,8 +30,8 @@ class Filter extends Component {
         if (this.state.upper_date != null) queryStr += "upper_date=" + String(this.state.upper_date) + "&";
 
 
-        queryStr += "limit=500";
-
+        queryStr += "limit=5000";
+	
         fetch(queryStr, {
             method: 'GET',
             headers: {
@@ -53,8 +53,8 @@ class Filter extends Component {
     }
 
     // Upon any change, update values for HTTP request and call GET to get the filtered crimes
-    onLowerDateChange(value) { this.setState({ lower_date: value }); this.getFilteredData() }
-    onUpperDateChange(value) { this.setState({ upper_date: value }); this.getFilteredData() }
+    onLowerDateChange(value) { this.setState({ lower_date: value }, () => { this.getFilteredData() }) }
+    onUpperDateChange(value) { this.setState({ upper_date: value }, () => { this.getFilteredData() }) }
     onNeighborhoodChange() { this.setState({ neighborhood: String(this.neighborhood.current.value) }, () => { this.getFilteredData() }) }
     ontypeChange() { this.setState({ type: String(this.type.current.value) }, () => { this.getFilteredData() }) }
     onWeaponChange() { this.setState({ weapon: String(this.weapon.current.value) }, () => { this.getFilteredData() }) }
@@ -209,13 +209,13 @@ class Filter extends Component {
                             <div class="date-picker" style={{ display: 'inline-block' }}>
                                 <Form.Group controlId="formGroupLowerDate">
                                     <Form.Label>Lower Date: </Form.Label> <tab></tab>
-                                    <DatePicker onChange={this.onLowerDateChange.bind(this)} value={this.state.lower_date} disableCalendar={true} />
+                                    <DatePicker onChange={this.onLowerDateChange.bind(this)} value={this.state.lower_date} />
                                 </Form.Group>
                             </div>
                             <div class="date-picker" style={{ display: 'inline-block' }}>
                                 <Form.Group controlId="formGroupUpperDate">
                                     <Form.Label>Upper Date: </Form.Label> <tab></tab>
-                                    <DatePicker onChange={this.onUpperDateChange.bind(this)} value={this.state.upper_date} disableCalendar={true} />
+                                    <DatePicker onChange={this.onUpperDateChange.bind(this)} value={this.state.upper_date} />
                                 </Form.Group>
                             </div>
                         </Form.Row>
@@ -235,8 +235,8 @@ class Filter extends Component {
                                 <option>BURGLARY</option>
                                 <option>COMMON ASSAULT</option>
                                 <option>HOMICIDE</option>
-                                <option>LARCENRY</option>
-                                <option>LARCENRY FROM AUTO</option>
+                                <option>LARCENY</option>
+                                <option>LARCENY FROM AUTO</option>
                                 <option>RAPE</option>
                                 <option>SHOOTING</option>
                             </Form.Control>
