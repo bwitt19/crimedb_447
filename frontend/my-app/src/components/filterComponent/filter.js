@@ -6,7 +6,7 @@ class Filter extends Component {
 
     constructor(props) {
         super(props);
-        this.state = { lower_date: null, upper_date: null, address: "", neighborhood: "", type: "", weapon: "", district: "", premise: "", data: [], isLoggedIn: false, filters: [] }
+        this.state = { lower_date: null, upper_date: null, address: "", neighborhood: "", type: "", weapon: "", district: "", premise: "", data: [], isLoggedIn: false, filters: [], loadingFilterName: "" }
         this.neighborhood = React.createRef();
         this.type = React.createRef();
         this.weapon = React.createRef();
@@ -187,7 +187,7 @@ class Filter extends Component {
                     type: this.props.userData.filters[x].type,
                     weapon: this.props.userData.filters[x].weapon,
                     district: this.props.userData.filters[x].district,
-                    premise: this.props.userData.filters[x].premise
+                    premise: this.props.userData.filters[x].premise,
                 }, () => {this.getFilteredData();})
                        
             }
@@ -195,6 +195,10 @@ class Filter extends Component {
         
     }
 
+    updateButton(val) {
+	this.setState({loadingFilterName: val.target.value});
+	this.loadFilter();
+    }
 
     render() {
         this.state.isLoggedIn = this.props.userData.loggedIn;
@@ -299,7 +303,7 @@ class Filter extends Component {
                                         <Form.Control type="filterName" ref={this.filterName} placeholder="Enter Filter Name" />
                                     </Form.Group>
 
-                                    { false ? (
+                                    { this.state.loadingFilterName == "" ? (
 
                                     <Button id="user-filters-button" onClick={this.saveFilter.bind(this)}>
                                         Create Filter
@@ -313,7 +317,7 @@ class Filter extends Component {
 
                                 <Form.Group controlId="formGridUsersFilters">
                                     <Form.Label>Load Filter</Form.Label>
-                                    <Form.Control as="select" onChange={this.loadFilter.bind(this)} ref={this.loadingFilterName} >
+                                    <Form.Control as="select" onChange={this.updateButton.bind(this)} ref={this.loadingFilterName} >
                                         <option></option>
                                         {/* Add all the user's filters to the drop-down menu */}
                                         {this.props.userData.filters.map(function(filter, index) {

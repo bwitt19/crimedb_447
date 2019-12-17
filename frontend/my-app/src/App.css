@@ -88,7 +88,6 @@
 	position: relative;
 	top: 30px;
 	display: inline-block;
-	margin-left: 30px;
 	width: 120px;
 	height: 40px;
 	background-color: #282c34;
@@ -107,7 +106,6 @@
 	position: relative;
 	top: 30px;
 	display: inline-block;
-	margin-left: 0px;
 	width: 120px;
 	height: 40px;
 	background-color: #282c34;
@@ -375,7 +373,6 @@
 	position: relative;
 	top: 30px;
 	display: inline-block;
-	margin-left: 30px;
 	width: 80px;
 	height: 40px;
 	background-color: #282c34;
@@ -396,7 +393,6 @@
 	position: relative;
 	top: 30px;
 	display: inline-block;
-	margin-left: 30px;
 	width: 80px;
 	height: 40px;
 	background-color: #282c34;
