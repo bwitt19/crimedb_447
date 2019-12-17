@@ -1,261 +1,570 @@
 
-/* App CSS */
-.fullapp {
-  position: relative;
-  height: 100vh;
+/* Desktop stylesheet */
+@media only screen and (min-width: 1051px) {
+
+    
+    /* App CSS */
+    .fullapp {
+	position: relative;
+	height: 100vh;
+    }
+    
+    
+    
+    
+    /* Navbar CSS */
+    .navbar {
+	position: relative;
+	display: block;
+	background-color: #282c34;
+	height: 50px;
+	width: 100%;
+	color: white;
+	
+    }
+    .navbar #navbar-link {
+	position: relative;
+	margin-left: 25px;
+	cursor: pointer;
+    }
+    
+    
+    
+    /* Homepage CSS */
+    .home {
+	height: 94.5%;
+    }
+    
+    
+    
+    /* Filters CSS */
+    .filters {
+	display: inline-block;
+	position: relative;
+	top: 20px;
+	width: 28%;
+	border: 2px solid black;
+	box-shadow: 5px 8px; 
+	padding-left:10px;
+	padding-right:10px;
+    }
+    
+    .filters #filters-title {
+	text-align: center;
+	text-decoration: underline;
+	font-size: 38px;
+	margin-bottom: 20px;
+    }
+    
+    .date-picker {
+	position: relative;
+	margin-left: 10px;
+	left: 45px;
+    }
+    
+    .user-filters {
+	display: inline-block;
+	position: relative;
+	top: 40px;
+	width: 28%;
+	border: 2px solid black;
+	box-shadow: 5px 8px; 
+	padding-left:10px;
+	padding-right:10px;
+    }
+    
+    .user-filters #user-filters-title {
+	text-align: center;
+	text-decoration: underline;
+	font-size: 38px;
+	margin-bottom: 20px;
+    }
+    
+    .user-filters #filter-name {
+	margin-left: 10px;
+	width: 65%;
+    }
+    
+    .user-filters #user-filters-button {
+	position: relative;
+	top: 30px;
+	display: inline-block;
+	margin-left: 30px;
+	width: 120px;
+	height: 40px;
+	background-color: #282c34;
+	border-color: black; 
+    }
+    
+    .user-filters #user-filters-button:hover {
+	position: relative;
+	width: 120px;
+	height: 40px;
+	background-color: #475064;
+	border-color: black; 
+    }
+    
+    .user-filters #user-filters-button-disabled {
+	position: relative;
+	top: 30px;
+	display: inline-block;
+	margin-left: 0px;
+	width: 120px;
+	height: 40px;
+	background-color: #282c34;
+	border-color: black; 
+    }
+    
+    
+    /* Carousel CSS */
+    .my-carousel {
+	display: block;
+	float: left;
+	width: 70%;
+	margin-left: 10px;
+	margin-right: 10px;
+    }
+    
+    .carousel {
+	display:block;
+	height: 100%;
+	
+    }
+    
+    /* Set the color of the arrow in fill= */
+    .my-carousel .carousel-control-prev-icon {
+	height: 30px;
+	width: 30px;
+	background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%23000' viewBox='0 0 8 8'%3E%3Cpath d='M5.25 0l-4 4 4 4 1.5-1.5-2.5-2.5 2.5-2.5-1.5-1.5z'/%3E%3C/svg%3E"); 
+    }
+    .my-carousel .carousel-control-next-icon {
+	height: 30px;
+	width: 30px;
+	background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%23000' viewBox='0 0 8 8'%3E%3Cpath d='M2.75 0l-1.5 1.5 2.5 2.5-2.5 2.5 1.5 1.5 4-4-4-4z'/%3E%3C/svg%3E");
+    }
+    
+    .carousel-slide {
+	display:block;
+	height: 880px;
+    }
+    
+    #heatmap {
+	height: 100%;
+	z-index: 1;
+    }
+    
+    
+    
+    
+    /* Login Page CSS */
+    .login {
+	position: relative;
+	top:200px;
+	display: block;
+	margin: 0 auto;
+	padding:50px;
+	text-align: left;
+	width: 450px;
+	border: 2px solid black;
+	box-shadow: 5px 8px; 
+    }
+    
+    .login #login-text {
+	font-size: 50px;
+	text-align: center;
+    }
+    
+    .login #login-forms {
+	padding-top: 25px;
+    }
+    
+    .login #login-signup-tag {
+	color:black;
+	text-align: center;
+    }
+    
+    .login #login-signup-tag-link {
+	display: inline;
+	padding-left: 5px;
+	color: blue;
+	text-decoration: underline;
+	cursor: pointer;
+    }
+    
+    .login #login-button {
+	position: relative;
+	top: 15px;
+	width: 100%;
+	height: 40px;
+	background-color: #282c34;
+	border-color: black; 
+    }
+    
+    .login #login-button:hover {
+	position: relative;
+	top: 15px;
+	width: 100%;
+	height: 40px;
+	background-color: #475064;
+	border-color: black; 
+    }
+    
+    .login #login-button-disabled {
+	position: relative;
+	top: 15px;
+	width: 100%;
+	height: 40px;
+	background-color: #282c34;
+	border-color: black; 
+    }
+    
+    .login #login-emsg {
+	color: red;
+	text-decoration: underline;
+    }
+    
+    
+    
+    /* Login Page CSS */
+    .register {
+	position: relative;
+	top:200px;
+	display: block;
+	margin: 0 auto;
+	padding:50px;
+	text-align: left;
+	width: 450px;
+	border: 2px solid black;
+	box-shadow: 5px 8px; 
+    }
+    
+    .register #register-text {
+	font-size: 50px;
+	text-align: center;
+    }
+    
+    .register #register-forms {
+	padding-top: 25px;
+    }
+    
+    .register #register-button {
+	position: relative;
+	top: 15px;
+	width: 100%;
+	height: 40px;
+	background-color: #282c34;
+	border-color: black; 
+    }
+    
+    .register #register-button:hover {
+	position: relative;
+	top: 15px;
+	width: 100%;
+	height: 40px;
+	background-color: #475064;
+	border-color: black; 
+    }
+    
+    .register #register-button-disabled {
+	position: relative;
+	top: 15px;
+	width: 100%;
+	height: 40px;
+	background-color: #282c34;
+	border-color: black; 
+    }
+    
+    .register #register-emsg {
+	color: red;
+	text-decoration: underline;
+    }
 }
 
 
 
 
-/* Navbar CSS */
-.navbar {
-  position: relative;
-  display: block;
-  background-color: #282c34;
-  height: 50px;
-  width: 100%;
-  color: white;
-  
+/********************/
+/* Phone stylesheet */
+/********************/
+@media only screen and (max-width: 1050px) {
+
+    /* App CSS */
+    .fullapp {
+	position: relative;
+	height: 100vh;
+    }
+    
+    
+    
+    
+    /* Navbar CSS */
+    .navbar {
+	position: relative;
+	display: block;
+	background-color: #282c34;
+	height: 50px;
+	width: 100%;
+	color: white;
+	
+    }
+    
+    .navbar #navbar-brand {
+	font-size: 16px;
+    }
+    .navbar #navbar-link {
+	position: relative;
+	margin-left: 15px;
+    }
+    
+    
+    
+    /* Homepage CSS */
+    .home {
+	height: 94.5%;
+    }
+    
+    
+    
+    /* Filters CSS */
+    .filters {
+	display: inline-block;
+	position: relative;
+	top: 20px;
+	width: 100%;
+	border-top: 2px solid black;
+	border-bottom: 2px solid black;
+	padding-left:10px;
+	padding-right:10px;
+    }
+    
+    .filters #filters-title {
+	text-align: center;
+	text-decoration: underline;
+	font-size: 38px;
+	margin-bottom: 20px;
+    }
+    
+    .date-picker {
+	position: relative;
+	margin-left: 10px;
+	left: 45px;
+    }
+    
+    .user-filters {
+	display: inline-block;
+	position: relative;
+	top: 40px;
+	width: 100%;
+	border-top: 2px solid black;
+	border-bottom: 2px solid black;
+	padding-left:10px;
+	padding-right:10px;
+    }
+    
+    .user-filters #user-filters-title {
+	text-align: center;
+	text-decoration: underline;
+	font-size: 38px;
+	margin-bottom: 20px;
+    }
+    
+    .user-filters #filter-name {
+	margin-left: 10px;
+	width: 65%;
+    }
+    
+    .user-filters #user-filters-button {
+	position: relative;
+	top: 30px;
+	display: inline-block;
+	margin-left: 30px;
+	width: 80px;
+	height: 40px;
+	background-color: #282c34;
+	border-color: black;
+	font-size: 10px;
+    }
+    
+    .user-filters #user-filters-button:hover {
+	position: relative;
+	width: 80px;
+	height: 40px;
+	background-color: #475064;
+	border-color: black;
+	font-size: 10px;
+    }
+    
+    .user-filters #user-filters-button-disabled {
+	position: relative;
+	top: 30px;
+	display: inline-block;
+	margin-left: 30px;
+	width: 80px;
+	height: 40px;
+	background-color: #282c34;
+	border-color: black; 
+	font-size: 10px;
+    }
+    
+    
+    /* Carousel CSS */
+    .my-carousel {
+	display: block;
+	float: left;
+	width: 100%;
+
+    }
+    
+    .carousel {
+	display:block;
+	height: 100%;
+	
+    }
+    
+    /* Set the color of the arrow in fill= */
+    .my-carousel .carousel-control-prev-icon {
+	height: 15px;
+	width: 15px;
+	background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%23000' viewBox='0 0 8 8'%3E%3Cpath d='M5.25 0l-4 4 4 4 1.5-1.5-2.5-2.5 2.5-2.5-1.5-1.5z'/%3E%3C/svg%3E"); 
+    }
+    .my-carousel .carousel-control-next-icon {
+	height: 15px;
+	width: 15px;
+	background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%23000' viewBox='0 0 8 8'%3E%3Cpath d='M2.75 0l-1.5 1.5 2.5 2.5-2.5 2.5 1.5 1.5 4-4-4-4z'/%3E%3C/svg%3E");
+    }
+    
+    .carousel-slide {
+	display:block;
+	height: 400px;
+    }
+    
+    #heatmap {
+	height: 100%;
+	z-index: 1;
+    }
+    
+    
+    
+    
+    /* Login Page CSS */
+    .login {
+	position: relative;
+	display: block;
+	margin: 0 auto;
+	padding:0px;
+	text-align: left;
+	width: 100%;
+	height: 375px;
+    }
+    
+    .login #login-text {
+	font-size: 50px;
+	text-align: center;
+    }
+    
+    .login #login-forms {
+	padding-top: 25px;
+    }
+    
+    .login #login-signup-tag {
+	color:black;
+	text-align: center;
+    }
+    
+    .login #login-signup-tag-link {
+	display: inline;
+	padding-left: 5px;
+	color: blue;
+	text-decoration: underline;
+	cursor: pointer;
+    }
+    
+    .login #login-button {
+	position: relative;
+	top: 15px;
+	width: 100%;
+	height: 40px;
+	background-color: #282c34;
+	border-color: black; 
+    }
+    
+    .login #login-button:hover {
+	position: relative;
+	top: 15px;
+	width: 100%;
+	height: 40px;
+	background-color: #475064;
+	border-color: black; 
+    }
+    
+    .login #login-button-disabled {
+	position: relative;
+	top: 15px;
+	width: 100%;
+	height: 40px;
+	background-color: #282c34;
+	border-color: black; 
+    }
+    
+    .login #login-emsg {
+	color: red;
+	text-decoration: underline;
+    }
+    
+    
+    
+    /* Login Page CSS */
+    .register {
+	position: relative;
+        display: block;
+        margin: 0 auto;
+        padding:0px;
+        text-align: left;
+        width: 100%;
+        height: 375px;
+    }
+    
+    .register #register-text {
+	font-size: 50px;
+	text-align: center;
+    }
+    
+    .register #register-forms {
+	padding-top: 25px;
+    }
+    
+    .register #register-button {
+	position: relative;
+	top: 15px;
+	width: 100%;
+	height: 40px;
+	background-color: #282c34;
+	border-color: black; 
+    }
+    
+    .register #register-button:hover {
+	position: relative;
+	top: 15px;
+	width: 100%;
+	height: 40px;
+	background-color: #475064;
+	border-color: black; 
+    }
+    
+    .register #register-button-disabled {
+	position: relative;
+	top: 15px;
+	width: 100%;
+	height: 40px;
+	background-color: #282c34;
+	border-color: black; 
+    }
+    
+    .register #register-emsg {
+	color: red;
+	text-decoration: underline;
+    }
 }
-.navbar #navbar-link {
-  position: relative;
-  margin-left: 25px;
-  cursor: pointer;
-}
-
-
-
-/* Homepage CSS */
-.home {
-  height: 94.5%;
-}
-
-.filters {
-  display: inline-block;
-  position: relative;
-  top: 20px;
-  width: 28%;
-  border: 2px solid black;
-  box-shadow: 5px 8px; 
-  padding-left:10px;
-  padding-right:10px;
-}
-
-.filters #filters-title {
-  text-align: center;
-  text-decoration: underline;
-  font-size: 38px;
-  margin-bottom: 20px;
-}
-
-.user-filters {
-  display: inline-block;
-  position: relative;
-  top: 40px;
-  width: 28%;
-  border: 2px solid black;
-  box-shadow: 5px 8px; 
-  padding-left:10px;
-  padding-right:10px;
-}
-
-.user-filters #user-filters-title {
-  text-align: center;
-  text-decoration: underline;
-  font-size: 38px;
-  margin-bottom: 20px;
-}
-
-.user-filters #filter-name {
-  margin-left: 10px;
-  width: 65%;
-}
-
-.user-filters #user-filters-button {
-  position: relative;
-  top: 30px;
-  display: inline-block;
-  margin-left: 30px;
-  width: 120px;
-  height: 40px;
-  background-color: #282c34;
-  border-color: black; 
-}
-
-.user-filters #user-filters-button:hover {
-  position: relative;
-  width: 120px;
-  height: 40px;
-  background-color: #475064;
-  border-color: black; 
-}
-
-.user-filters #user-filters-button-disabled {
-  position: relative;
-  top: 30px;
-  display: inline-block;
-  margin-left: 30px;
-  width: 120px;
-  height: 40px;
-  background-color: #282c34;
-  border-color: black; 
-}
-
-.my-carousel {
-  display: block;
-  float: left;
-  width: 70%;
-  height: 100%;
-  background: orange;
-  margin-left: 10px;
-  margin-right: 10px;
-}
-
-.carousel {
-  display:block;
-  height: 100%;
-  
-}
-
-.carousel-slide {
-  display:block;
-  height: 100%;
-  background:blue;
-}
-
-.date-picker {
-  position: relative;
-  margin-left: 10px;
-  left: 45px;
-
-}
-
-
-
-/* Login Page CSS */
-.login {
-  position: relative;
-  top:200px;
-  display: block;
-  margin: 0 auto;
-  padding:50px;
-  text-align: left;
-  width: 450px;
-  border: 2px solid black;
-  box-shadow: 5px 8px; 
-}
-
-.login #login-text {
-  font-size: 50px;
-  text-align: center;
-}
-
-.login #login-forms {
-  padding-top: 25px;
-}
-
-.login #login-signup-tag {
-  color:black;
-  text-align: center;
-}
-
-.login #login-signup-tag-link {
-  display: inline;
-  padding-left: 5px;
-  color: blue;
-  text-decoration: underline;
-  cursor: pointer;
-}
-
-.login #login-button {
-  position: relative;
-  top: 15px;
-  width: 100%;
-  height: 40px;
-  background-color: #282c34;
-  border-color: black; 
-}
-
-.login #login-button:hover {
-  position: relative;
-  top: 15px;
-  width: 100%;
-  height: 40px;
-  background-color: #475064;
-  border-color: black; 
-}
-
-.login #login-button-disabled {
-  position: relative;
-  top: 15px;
-  width: 100%;
-  height: 40px;
-  background-color: #282c34;
-  border-color: black; 
-}
-
-.login #login-emsg {
-  color: red;
-  text-decoration: underline;
-}
-
-
-
-/* Login Page CSS */
-.register {
-  position: relative;
-  top:200px;
-  display: block;
-  margin: 0 auto;
-  padding:50px;
-  text-align: left;
-  width: 450px;
-  border: 2px solid black;
-  box-shadow: 5px 8px; 
-}
-
-.register #register-text {
-  font-size: 50px;
-  text-align: center;
-}
-
-.register #register-forms {
-  padding-top: 25px;
-}
-
-.register #register-button {
-  position: relative;
-  top: 15px;
-  width: 100%;
-  height: 40px;
-  background-color: #282c34;
-  border-color: black; 
-}
-
-.register #register-button:hover {
-  position: relative;
-  top: 15px;
-  width: 100%;
-  height: 40px;
-  background-color: #475064;
-  border-color: black; 
-}
-
-.register #register-button-disabled {
-  position: relative;
-  top: 15px;
-  width: 100%;
-  height: 40px;
-  background-color: #282c34;
-  border-color: black; 
-}
-
-.register #register-emsg {
-  color: red;
-  text-decoration: underline;
-}
-
 
 
 

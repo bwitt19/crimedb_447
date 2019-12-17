@@ -20,7 +20,7 @@ class Header extends Component{
     return (
       <Navbar variant="dark">
         <LinkContainer to="/">
-          <Navbar.Brand>Baltimore Crime Visualizer</Navbar.Brand>
+          <Navbar.Brand id="navbar-brand">Baltimore Crime Visualizer</Navbar.Brand>
         </LinkContainer>
         <Navbar.Toggle />
         <Navbar.Collapse className="justify-content-end">
